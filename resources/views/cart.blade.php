@@ -37,38 +37,38 @@
             <h2>{{ Cart::count() }} item(s) in Shopping Cart</h2>
 
             <div class="cart-table">
-                @foreach (Cart::content() as $item)
+                @foreach ($products as $item)
                 <div class="cart-table-row">
                     <div class="cart-table-row-left">
-                        <a href="{{ route('shop.show', $item->model->slug) }}"><img src="{{ productImage($item->model->image) }}" alt="item" class="cart-table-img"></a>
+                        <a href="{{ route('shop.show', $item->slug) }}"><img src="{{ productImage($item->image) }}" alt="item" class="cart-table-img"></a>
                         <div class="cart-item-details">
-                            <div class="cart-table-item"><a href="{{ route('shop.show', $item->model->slug) }}">{{ $item->model->name }}</a></div>
-                            <div class="cart-table-description">{{ $item->model->details }}</div>
+                            <div class="cart-table-item"><a href="{{ route('shop.show', $item->slug) }}">{{ $item->name }}</a></div>
+                            <div class="cart-table-description">{{ $item->details }}</div>
                         </div>
                     </div>
                     <div class="cart-table-row-right">
                         <div class="cart-table-actions">
-                            <form action="{{ route('cart.destroy', $item->rowId) }}" method="POST">
+                            <form action="{{ route('cart.destroy', $item->id) }}" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
                                 <button type="submit" class="cart-options">Remove</button>
                             </form>
 
-                            <form action="{{ route('cart.switchToSaveForLater', $item->rowId) }}" method="POST">
+                            <form action="{{ route('cart.switchToSaveForLater', $item->id) }}" method="POST">
                                 {{ csrf_field() }}
 
                                 <button type="submit" class="cart-options">Save for Later</button>
                             </form>
                         </div>
                         <div>
-                            <select class="quantity" data-id="{{ $item->rowId }}" data-productQuantity="{{ $item->model->quantity }}">
+                            <select class="quantity" data-id="{{ $item->id }}" data-productQuantity="{{ $item->quantity }}">
                                 @for ($i = 1; $i < 5 + 1 ; $i++)
-                                    <option {{ $item->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                    <option {{ $item->quantity == $i ? 'selected' : '' }}>{{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
-                        <div>{{ presentPrice($item->subtotal) }}</div>
+                        <div>{{ presentPrice($item->price) }}</div>
                     </div>
                 </div> <!-- end cart-table-row -->
                 @endforeach

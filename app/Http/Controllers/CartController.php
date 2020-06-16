@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
+// use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
-
+use App\Cart;
+use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     /**
@@ -17,6 +18,7 @@ class CartController extends Controller
     public function index()
     {
         $mightAlsoLike = Product::mightAlsoLike()->get();
+        $products=Product::getListProduct(Auth::user()->id);
 
         return view('cart')->with([
             'mightAlsoLike' => $mightAlsoLike,
@@ -24,6 +26,7 @@ class CartController extends Controller
             'newSubtotal' => getNumbers()->get('newSubtotal'),
             'newTax' => getNumbers()->get('newTax'),
             'newTotal' => getNumbers()->get('newTotal'),
+            'products' => $products
         ]);
     }
 
@@ -35,18 +38,21 @@ class CartController extends Controller
      */
     public function store(Product $product)
     {
-        $duplicates = Cart::search(function ($cartItem, $rowId) use ($product) {
-            return $cartItem->id === $product->id;
-        });
+        // $duplicates = Cart::search(function ($cartItem, $rowId) use ($product) {
+        //     return $cartItem->id === $product->id;
+        // });
 
-        if ($duplicates->isNotEmpty()) {
-            return redirect()->route('cart.index')->with('success_message', 'Item is already in your cart!');
-        }
+        // if ($duplicates->isNotEmpty()) {
+        //     return redirect()->route('cart.index')->with('success_message', 'Item is already in your cart!');
+        // }
 
-        Cart::add($product->id, $product->name, 1, $product->price)
-            ->associate('App\Product');
+        // Cart::add($product->id, $product->name, 1, $product->price)
+        //     ->associate('App\Product');
 
+        // return redirect()->route('cart.index')->with('success_message', 'Item was added to your cart!');
+        $data = Cart::addToCart(Auth::user()->id, $product->id);
         return redirect()->route('cart.index')->with('success_message', 'Item was added to your cart!');
+
     }
 
     /**

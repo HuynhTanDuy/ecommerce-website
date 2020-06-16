@@ -6,6 +6,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Support\Facades\DB;
+
 class Product extends Model
 {
     use SearchableTrait, Searchable;
@@ -61,5 +63,11 @@ class Product extends Model
         ];
 
         return array_merge($array, $extraFields);
+    }
+
+    public static function getListProduct($user_id)
+    {
+        $data=DB::select('select products.*,cart_detail.quantity from products join cart_detail on products.id=cart_detail.id_product join cart on cart_detail.id_cart=cart.id where cart.id_user = ? and cart_detail.status=1',[$user_id]);
+        return $data;
     }
 }

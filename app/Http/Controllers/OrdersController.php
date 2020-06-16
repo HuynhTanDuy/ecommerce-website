@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrdersController extends Controller
 {
@@ -94,5 +96,11 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function test()
+    {
+        $id_cart=DB::select('select * from cart where id_user=?',[3]);
+        return $id_cart;
     }
 }
