@@ -1510,6 +1510,10 @@ h1.checkout-heading {
   background: #3b3b3b;
 }
 
+.my-profile .note {
+  font-size: 14px;
+}
+
 .my-orders .order-container {
   margin-bottom: 64px;
 }
@@ -1546,5 +1550,32 @@ h1.checkout-heading {
 .my-orders .order-product-item img {
   max-width: 140px;
   margin-right: 24px;
+}
+
+.register-shop-section label {
+  display: block;
+}
+
+.register-shop-section .form-control {
+  margin-bottom: 30px;
+}
+
+.register-shop-section input {
+  border: 1px solid #919191;
+  padding: 16px 10px;
+  border-radius: 5px;
+  width: 66.6%;
+  font-size: 14px;
+}
+
+.register-shop-section .register-shop-button {
+  background: #212121;
+  color: #e9e9e9;
+  border-radius: 5px;
+  padding: 12px 50px;
+}
+
+.register-shop-section .register-shop-button:hover {
+  background: #3b3b3b;
 }
 

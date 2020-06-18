@@ -39,6 +39,8 @@ Route::get('/search', 'ShopController@search')->name('search');
 
 Route::get('/search-algolia', 'ShopController@searchAlgolia')->name('search-algolia');
 
+Route::get('/register-shop', 'RegisterShopController@index');
+
 Route::middleware('auth')->group(function () {
     Route::get('/my-profile', 'UsersController@edit')->name('users.edit');
     Route::patch('/my-profile', 'UsersController@update')->name('users.update');

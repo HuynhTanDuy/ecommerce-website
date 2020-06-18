@@ -50,20 +50,24 @@
                     @method('patch')
                     @csrf
                     <div class="form-control">
+                        <div class="label">Tên</div>
                         <input id="name" type="text" name="name" value="{{ old('name', $user->name) }}" placeholder="Name" required>
                     </div>
                     <div class="form-control">
+                        <div class="label">Email</div>
                         <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}" placeholder="Email" required>
                     </div>
                     <div class="form-control">
-                        <input id="password" type="password" name="password" placeholder="Password">
-                        <div>Leave password blank to keep current password</div>
+                        <div class="label">Mật khẩu</div>
+                        <input id="password" type="password" name="password">
+                        <div class="note">*Để trống nếu không muốn thay đổi mật khẩu</div>
                     </div>
                     <div class="form-control">
-                        <input id="password-confirm" type="password" name="password_confirmation" placeholder="Confirm Password">
+                        <div class="label">Xác nhận mật khẩu</div>
+                        <input id="password-confirm" type="password" name="password_confirmation">
                     </div>
                     <div>
-                        <button type="submit" class="my-profile-button">Update Profile</button>
+                        <button type="submit" class="my-profile-button">Cập nhật</button>
                     </div>
                 </form>
             </div>
