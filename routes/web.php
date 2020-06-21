@@ -39,7 +39,6 @@ Route::get('/search', 'ShopController@search')->name('search');
 
 Route::get('/search-algolia', 'ShopController@searchAlgolia')->name('search-algolia');
 
-Route::get('/register-shop', 'RegisterShopController@index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/my-profile', 'UsersController@edit')->name('users.edit');
@@ -47,4 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/my-orders', 'OrdersController@index')->name('orders.index');
     Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
+    Route::get('/register-store', 'RegisterStoreController@index');
+    Route::post('/register-store', 'RegisterStoreController@register')->name('store.register');
+    Route::get('/register-info', 'RegisterStoreController@registerInfo')->name('store.register-info'); 
+
 });
