@@ -11,13 +11,17 @@ class RegisterStoreController extends Controller
     public function index() {
         $categories = Category::all();
         $user = auth()->user();
-        return view('RegisterStore.register-store')->with([
+        return view('Store.register-store')->with([
             'user' => $user,
             'categories' => $categories
         ]);
     }
 
     public function register(Request $request) {
+        $is_existed_store = Store::where('id_owner', auth()->user()->id)->first();
+        if ($is_existed_store) {
+            return back()->withErrors('Bạn đã đăng kí mở cửa hàng rồi, vui lòng chờ quản trị viên xét duyệt!');
+        }
         $store = Store::create([
             'category' => $request->category,
             'id_license' => $request->id_license,
@@ -33,9 +37,14 @@ class RegisterStoreController extends Controller
     }
 
     public function registerInfo() {
-        $store = Store::where('id_owner', auth()->user()->id)->firstOrFail();
-        $category = Category::where('id',  $store->category)->firstOrFail();
-        return view('RegisterStore.register-info')->with([
+        $categories = Category::all();
+        $store = Store::where('id_owner', auth()->user()->id)->first();
+        if ($store) {
+            $category = Category::where('id',  $store->category)->first();
+        } else {
+            return view('Store.register-store')->with([ 'user' => auth()->user(), 'categories' => $categories])->withErrors('Bạn chưa đăng kí mở cửa hàng');
+        }
+        return view('Store.register-info')->with([
             'user' => auth()->user(),
             'store' => $store,
             'category' => $category

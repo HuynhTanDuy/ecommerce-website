@@ -46,8 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/my-orders', 'OrdersController@index')->name('orders.index');
     Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
-    Route::get('/register-store', 'RegisterStoreController@index');
+    Route::get('/register-store', 'RegisterStoreController@index')->name('store.index');
     Route::post('/register-store', 'RegisterStoreController@register')->name('store.register');
     Route::get('/register-info', 'RegisterStoreController@registerInfo')->name('store.register-info'); 
-
+    Route::get('/my-store', 'StoreController@index');
 });

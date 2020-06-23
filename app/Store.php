@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-    protected $fillable = ['category', 'id_license', 'id_owner', 'location', 'name', 'status'];
+    protected $fillable = ['category', 'id_license', 'id_owner', 'location', 'status', 'name'];
     protected $table = 'store';
 
     public function user()
