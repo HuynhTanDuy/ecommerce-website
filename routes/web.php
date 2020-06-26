@@ -50,4 +50,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/register-store', 'RegisterStoreController@register')->name('store.register');
     Route::get('/register-info', 'RegisterStoreController@registerInfo')->name('store.register-info'); 
     Route::get('/my-store', 'StoreController@index');
+    Route::get('/add-product', 'StoreController@addProductIndex')->name('store.add-product');
 });

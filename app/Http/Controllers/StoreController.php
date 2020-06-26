@@ -18,4 +18,7 @@ class StoreController extends Controller
         ]);
     }
 
+    public function addProductIndex() {
+        return view('Store.add-product');
+    }
 }

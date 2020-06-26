@@ -1678,3 +1678,17 @@ h1.checkout-heading {
   box-shadow: none;
 }
 
+.register-info-section .add-shop-button {
+  margin: 30px;
+  border-color: #a91212;
+  padding: 10px 32px !important;
+  background-color: #b73131;
+  color: #e9e9e9;
+  border-radius: 5px;
+  padding: 12px 50px;
+}
+
+.register-info-section .add-shop-button:hover {
+  background-color: #c54141 !important;
+}
+
