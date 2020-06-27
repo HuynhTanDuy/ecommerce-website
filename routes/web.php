@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/register-store', 'RegisterStoreController@index')->name('store.index');
     Route::post('/register-store', 'RegisterStoreController@register')->name('store.register');
     Route::get('/register-info', 'RegisterStoreController@registerInfo')->name('store.register-info'); 
-    Route::get('/my-store', 'StoreController@index');
-    Route::get('/add-product', 'StoreController@addProductIndex')->name('store.add-product');
+    Route::get('/my-store', 'StoreController@index')->name('store.my-store');
+    Route::get('/my-store/add-product', 'StoreController@addProductIndex')->name('store.add-product');
+    Route::get('/my-store/update-product/{id}', 'StoreController@updateProductIndex')->name('store.update-product');
+    Route::post('/my-store/update-product/{id}', 'StoreController@updateProduct')->name('store.update-product-action');
+    Route::get('/my-store/delete-product/{id}', 'StoreController@deleteProduct')->name('store.delete-product');
 });

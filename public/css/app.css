@@ -1483,6 +1483,14 @@ h1.checkout-heading {
   text-align: right;
 }
 
+.my-profile textarea {
+  border: 1px solid #919191;
+  padding: 16px 10px;
+  border-radius: 5px;
+  width: 66.6%;
+  font-size: 14px;
+}
+
 .my-profile label {
   display: block;
 }
@@ -1512,6 +1520,19 @@ h1.checkout-heading {
 
 .my-profile .note {
   font-size: 14px;
+}
+
+.my-profile .add-product-button {
+  border-color: #a91212;
+  padding: 10px 32px !important;
+  background-color: #b73131;
+  color: #e9e9e9;
+  border-radius: 5px;
+  padding: 12px 50px;
+}
+
+.my-profile .add-product-button:hover {
+  background-color: #c54141 !important;
 }
 
 .my-orders .order-container {
@@ -1552,15 +1573,15 @@ h1.checkout-heading {
   margin-right: 24px;
 }
 
-.register-shop-section label {
+.register-shop-section .add-product-section label {
   display: block;
 }
 
-.register-shop-section .form-control {
+.register-shop-section .add-product-section .form-control {
   margin-bottom: 30px;
 }
 
-.register-shop-section input {
+.register-shop-section .add-product-section input {
   border: 1px solid #919191;
   padding: 16px 10px;
   border-radius: 5px;
@@ -1568,22 +1589,30 @@ h1.checkout-heading {
   font-size: 14px;
 }
 
-.register-shop-section input.radio-button {
+.register-shop-section .add-product-section input.radio-button {
   width: auto !important;
 }
 
-.register-shop-section .register-shop-button {
+.register-shop-section .add-product-section textarea {
+  border: 1px solid #919191;
+  padding: 16px 10px;
+  border-radius: 5px;
+  width: 66.6%;
+  font-size: 14px;
+}
+
+.register-shop-section .add-product-section .register-shop-button {
   background: #212121;
   color: #e9e9e9;
   border-radius: 5px;
   padding: 12px 50px;
 }
 
-.register-shop-section .register-shop-button:hover {
+.register-shop-section .add-product-section .register-shop-button:hover {
   background: #3b3b3b;
 }
 
-.register-shop-section .register-shop-button:disabled {
+.register-shop-section .add-product-section .register-shop-button:disabled {
   cursor: not-allowed;
   background: whitesmoke;
   color: rgba(0, 0, 0, 0.25);
@@ -1593,7 +1622,7 @@ h1.checkout-heading {
   box-shadow: none;
 }
 
-.register-shop-section select {
+.register-shop-section .add-product-section select {
   border: 1px solid #919191;
   padding: 16px 10px;
   border-radius: 5px;
@@ -1679,7 +1708,6 @@ h1.checkout-heading {
 }
 
 .register-info-section .add-shop-button {
-  margin: 30px;
   border-color: #a91212;
   padding: 10px 32px !important;
   background-color: #b73131;
@@ -1690,5 +1718,25 @@ h1.checkout-heading {
 
 .register-info-section .add-shop-button:hover {
   background-color: #c54141 !important;
+}
+
+.products-section {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  margin: 80px auto 80px;
+}
+
+.products-section .sidebar li.active {
+  font-weight: 500;
+}
+
+.products-section .products {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 60px 30px;
+}
+
+.products-section .products .product-price {
+  color: #919191;
 }
 

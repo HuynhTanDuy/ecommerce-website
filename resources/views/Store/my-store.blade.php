@@ -14,7 +14,7 @@
         <span>My Profile</span>
     @endcomponent
 
-    <div class="container" style="max-width: 1700px;">
+    <div class="container">
         @if (session()->has('success_message'))
             <div class="alert alert-success">
                 {{ session()->get('success_message') }}
@@ -30,14 +30,15 @@
                 </ul>
             </div>
         @endif
-        <div class="store-section container" style="max-width:1700px">
+        <div class="store-section container" style="max-width:1200px">
 			<div class="register-info-section">
             <div class="products-header">
                 <h1 class="stylish-heading"> Quản lí cửa hàng</h1>
-            </div>
-
+			</div>
+			<div style="padding-bottom: 30px;">
+				<a id="addBtn" class="add-shop-button" href="{{ route('store.add-product') }}">Thêm sản phẩm mới</a>
+			</div>
             <div>
-				<button id="addBtn" class="add-shop-button">Thêm sản phẩm mới</button>
 				<table class="table">
 					<thead class="thead-dark">
 					  <tr >
@@ -66,8 +67,16 @@
 						<td>@mdo</td>
 						<td>...</td>
 						<td>...</td>
-						<td><button id="register" style ="padding: 10px 32px;"class="register-shop-button">Sửa</button></td>
-						<td><button id="register" class="delete-shop-button">Xoá</button></td>
+						<td><a id="register" style ="padding: 10px 32px;"class="register-shop-button" 
+						href="{{route('store.update-product', $product->id)}}">Sửa</a></td>
+						<td>
+						<form action="{{route('store.delete-product', $product->id)}}" method="POST">
+							@method('post')
+							@csrf
+							<a id="register" type="submit" class="delete-shop-button" 
+						href = "{{route('store.delete-product', $product->id)}}">Xoá</a>
+						</form></td>
+					
 					</tr>
 					@endforeach
 					</tbody>

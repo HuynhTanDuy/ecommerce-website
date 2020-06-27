@@ -1,5 +1,12 @@
 .my-profile {
 
+	textarea {
+        border: 1px solid $text-color-light;
+        padding: 16px 10px;
+        border-radius: 5px;
+        width: 66.6%;
+        font-size: 14px;
+	}
 	label {
 		display: block;
 	}
@@ -28,5 +35,16 @@
 	}
 	.note {
 		font-size: 14px;
+	}
+	.add-product-button {
+		border-color: #a91212;
+		padding: 10px 32px !important;
+		background-color: #b73131;
+        color: $white;
+        border-radius: 5px;
+        padding: 12px 50px;
+        &:hover {
+            background-color: #c54141 !important;
+		}
 	}
 }
