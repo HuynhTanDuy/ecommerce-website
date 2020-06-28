@@ -20,7 +20,7 @@ function setActiveCategory($category, $output = 'active')
 
 function productImage($path)
 {
-    return $path && file_exists('storage/'.$path) ? asset('storage/'.$path) : asset('img/not-found.jpg');
+    return $path && file_exists('storage/'.$path) ? asset('storage/'.$path) : asset('img/products/'.$path);
 }
 
 function getNumbers()
