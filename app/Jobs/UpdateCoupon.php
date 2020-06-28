@@ -6,9 +6,11 @@ use App\Coupon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Gloudemans\Shoppingcart\Facades\Cart;
+// use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateCoupon implements ShouldQueue
 {
@@ -33,11 +35,14 @@ class UpdateCoupon implements ShouldQueue
      */
     public function handle()
     {
-        if (Cart::currentInstance() === 'default') {
-            session()->put('coupon', [
-                'name' => $this->coupon->code,
-                'discount' => $this->coupon->discount(Cart::subtotal()),
-            ]);
+        if (Auth::user()) {
+            $user_id=Auth::user()->id;
         }
+        else $user_id=0;
+        session()->put('coupon', [
+            'name' => $this->coupon->code,
+            'discount' => $this->coupon->discount(Cart::getSubtotal($user_id))
+        ]);
+        
     }
 }

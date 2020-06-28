@@ -9,9 +9,11 @@ use App\Mail\OrderPlaced;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CheckoutRequest;
-use Gloudemans\Shoppingcart\Facades\Cart;
+// use Gloudemans\Shoppingcart\Facades\Cart;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Cartalyst\Stripe\Exception\CardErrorException;
+use Illuminate\Support\Facades\Auth;
+use App\Cart;
 
 class CheckoutController extends Controller
 {
@@ -22,33 +24,40 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        if (Cart::instance('default')->count() == 0) {
-            return redirect()->route('shop.index');
+        // if (Cart::instance('default')->count() == 0) {
+        //     return redirect()->route('shop.index');
+        // }
+
+        // if (auth()->user() && request()->is('guestCheckout')) {
+        //     return redirect()->route('checkout.index');
+        // }
+
+        // $gateway = new \Braintree\Gateway([
+        //     'environment' => config('services.braintree.environment'),
+        //     'merchantId' => config('services.braintree.merchantId'),
+        //     'publicKey' => config('services.braintree.publicKey'),
+        //     'privateKey' => config('services.braintree.privateKey')
+        // ]);
+
+        // try {
+        //     $paypalToken = $gateway->ClientToken()->generate();
+        // } catch (\Exception $e) {
+        //     $paypalToken = null;
+        // }
+        if (Auth::user()) {
+            $user_id=Auth::user()->id;
         }
-
-        if (auth()->user() && request()->is('guestCheckout')) {
-            return redirect()->route('checkout.index');
-        }
-
-        $gateway = new \Braintree\Gateway([
-            'environment' => config('services.braintree.environment'),
-            'merchantId' => config('services.braintree.merchantId'),
-            'publicKey' => config('services.braintree.publicKey'),
-            'privateKey' => config('services.braintree.privateKey')
-        ]);
-
-        try {
-            $paypalToken = $gateway->ClientToken()->generate();
-        } catch (\Exception $e) {
-            $paypalToken = null;
-        }
-
+        else $user_id=0;     
+        $products=Product::getListProduct($user_id);
         return view('checkout')->with([
-            'paypalToken' => $paypalToken,
+            // 'paypalToken' => $paypalToken,
             'discount' => getNumbers()->get('discount'),
-            'newSubtotal' => getNumbers()->get('newSubtotal'),
-            'newTax' => getNumbers()->get('newTax'),
-            'newTotal' => getNumbers()->get('newTotal'),
+            // 'newSubtotal' => getNumbers()->get('newSubtotal'),
+            // 'newTax' => getNumbers()->get('newTax'),
+            // 'newTotal' => getNumbers()->get('newTotal'),
+            'sub_total' =>getNumbers()->get('sub_total'),
+            'final_total' => getNumbers()->get('final_total'),
+            'products' => $products
         ]);
     }
 
@@ -60,15 +69,15 @@ class CheckoutController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(CheckoutRequest $request)
-    {
+    {   
         // Check race condition when there are less items available to purchase
-        if ($this->productsAreNoLongerAvailable()) {
-            return back()->withErrors('Sorry! One of the items in your cart is no longer avialble.');
-        }
+        // if ($this->productsAreNoLongerAvailable()) {
+        //     return back()->withErrors('Sorry! One of the items in your cart is no longer avialble.');
+        // }
 
-        $contents = Cart::content()->map(function ($item) {
-            return $item->model->slug.', '.$item->qty;
-        })->values()->toJson();
+        // $contents = Cart::content()->map(function ($item) {
+        //     return $item->model->slug.', '.$item->qty;
+        // })->values()->toJson();
 
         try {
             // $charge = Stripe::charges()->create([
@@ -90,7 +99,8 @@ class CheckoutController extends Controller
             // decrease the quantities of all the products in the cart
             $this->decreaseQuantities();
 
-            Cart::instance('default')->destroy();
+            // Cart::instance('default')->destroy();
+            Cart::clearAfterOrder(Auth::user()->id);
             session()->forget('coupon');
 
             return redirect()->route('confirmation.index')->with('success_message', 'Thank you! Your payment has been successfully accepted!');
@@ -169,23 +179,24 @@ class CheckoutController extends Controller
             'billing_address' => $request->address,
             'billing_city' => $request->city,
             'billing_province' => $request->province,
-            'billing_postalcode' => $request->postalcode,
+            // 'billing_postalcode' => $request->postalcode,
             'billing_phone' => $request->phone,
-            'billing_name_on_card' => $request->name_on_card,
+            // 'billing_name_on_card' => $request->name_on_card,
             'billing_discount' => getNumbers()->get('discount'),
             'billing_discount_code' => getNumbers()->get('code'),
-            'billing_subtotal' => getNumbers()->get('newSubtotal'),
-            'billing_tax' => getNumbers()->get('newTax'),
-            'billing_total' => getNumbers()->get('newTotal'),
+            'billing_subtotal' => getNumbers()->get('sub_total'),
+            // 'billing_tax' => getNumbers()->get('newTax'),
+            'billing_total' => getNumbers()->get('final_total'),
             'error' => $error,
         ]);
 
         // Insert into order_product table
-        foreach (Cart::content() as $item) {
+        $products = Product::getListProduct(Auth::user()->id);
+        foreach ($products as $item) {
             OrderProduct::create([
                 'order_id' => $order->id,
-                'product_id' => $item->model->id,
-                'quantity' => $item->qty,
+                'product_id' => $item->id,
+                'quantity' => $item->quantity_cart,
             ]);
         }
 
@@ -221,11 +232,13 @@ class CheckoutController extends Controller
     }
 
     protected function decreaseQuantities()
-    {
-        foreach (Cart::content() as $item) {
-            $product = Product::find($item->model->id);
-
-            $product->update(['quantity' => $product->quantity - $item->qty]);
+    {   
+        $products = Product::getListProduct(Auth::user()->id);
+        foreach ($products as $item) {
+            $product = Product::find($item->id);
+            $sub =  $product->quantity - $item->quantity_cart;
+            Product::updateQuantity($item->id, $sub);
+            // $product->update(['quantity' => $product->quantity - $item->quantity_cart]);
         }
     }
 

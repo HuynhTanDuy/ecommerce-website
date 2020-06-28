@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Cart;
 
 function presentPrice($price)
 {
@@ -24,23 +25,32 @@ function productImage($path)
 
 function getNumbers()
 {
-    $tax = config('cart.tax') / 100;
+    //$tax = config('cart.tax') / 100;
     $discount = session()->get('coupon')['discount'] ?? 0;
     $code = session()->get('coupon')['name'] ?? null;
-    $newSubtotal = (Cart::subtotal() - $discount);
+    // $newSubtotal = (Cart::subtotal() - $discount);
+    $newSubtotal=1;
     if ($newSubtotal < 0) {
         $newSubtotal = 0;
     }
-    $newTax = $newSubtotal * $tax;
-    $newTotal = $newSubtotal * (1 + $tax);
-
+    //$newTax = $newSubtotal * $tax;
+    //$newTotal = $newSubtotal * (1 + $tax);
+    if (Auth::user()) {
+            $user_id=Auth::user()->id;
+        }
+    else $user_id=0;
+    $sub_total=Cart::getSubtotal($user_id);
+    
+    $final_total= $sub_total - $discount;
     return collect([
-        'tax' => $tax,
+        //'tax' => $tax,
         'discount' => $discount,
         'code' => $code,
-        'newSubtotal' => $newSubtotal,
-        'newTax' => $newTax,
-        'newTotal' => $newTotal,
+        // 'newSubtotal' => $newSubtotal,
+        //'newTax' => $newTax,
+        //'newTotal' => $newTotal,
+        'sub_total' =>$sub_total,
+        'final_total' => $final_total
     ]);
 }
 

@@ -11,11 +11,11 @@
 @section('content')
 
    <div class="thank-you-section">
-       <h1>Thank you for <br> Your Order!</h1>
-       <p>A confirmation email was sent</p>
+       <h1>Cảm ơn quý khách <br> đã đặt hàng!</h1>
+       <p>Email xác nhận đơn hàng đã được gửi tới email của quý khách</p>
        <div class="spacer"></div>
        <div>
-           <a href="{{ url('/') }}" class="button">Home Page</a>
+           <a href="{{ url('/') }}" class="button">Trang chủ</a>
        </div>
    </div>
 

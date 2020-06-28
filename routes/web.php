@@ -7,12 +7,15 @@ Route::get('/shop/{product}', 'ShopController@show')->name('shop.show');
 
 Route::get('/cart', 'CartController@index')->name('cart.index');
 Route::post('/cart/{product}', 'CartController@store')->name('cart.store');
+
+Route::post('/quantity/cart', 'CartController@updateQuantity');
+
 Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
 Route::delete('/cart/{product}', 'CartController@destroy')->name('cart.destroy');
 Route::post('/cart/switchToSaveForLater/{product}', 'CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
 
 Route::delete('/saveForLater/{product}', 'SaveForLaterController@destroy')->name('saveForLater.destroy');
-Route::post('/saveForLater/switchToCart/{product}', 'SaveForLaterController@switchToCart')->name('saveForLater.switchToCart');
+Route::post('/saveForLater/switchToCart/{product}', 'CartController@switchToCart')->name('saveForLater.switchToCart');
 
 Route::post('/coupon', 'CouponsController@store')->name('coupon.store');
 Route::delete('/coupon', 'CouponsController@destroy')->name('coupon.destroy');
@@ -56,3 +59,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/my-store/update-product/{id}', 'StoreController@updateProduct')->name('store.update-product-action');
     Route::get('/my-store/delete-product/{id}', 'StoreController@deleteProduct')->name('store.delete-product');
 });
+
+Route::get('/test','OrdersController@test');

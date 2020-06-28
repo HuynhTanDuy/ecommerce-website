@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Cart;
+use App\Product;
+use App\User;
 class OrdersController extends Controller
 {
     /**
@@ -94,5 +98,15 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function test()
+    {
+        return User::create([
+            'name' =>'user_test1',
+            'email' => 'testemail',
+            'password' => bcrypt('123456'),
+        ]);
+        return $product;
     }
 }
