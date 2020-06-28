@@ -58,6 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-store/update-product/{id}', 'StoreController@updateProductIndex')->name('store.update-product');
     Route::post('/my-store/update-product/{id}', 'StoreController@updateProduct')->name('store.update-product-action');
     Route::get('/my-store/delete-product/{id}', 'StoreController@deleteProduct')->name('store.delete-product');
+
+    Route::get('my-store/order-list', 'StoreController@orderList')->name('order.list');
 });
 
 Route::get('/test','OrdersController@test');

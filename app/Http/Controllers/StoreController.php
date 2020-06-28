@@ -5,6 +5,8 @@ use App\Category;
 use App\Store;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class StoreController extends Controller
 {
@@ -116,5 +118,14 @@ class StoreController extends Controller
         $product->delete();
         return redirect()->route('store.my-store')->with('success_message', 'Xóa sản phẩm sản phẩm thành công');
 
-    }
+	}
+	
+	public function orderList() {
+		$store = Store::where('id_owner', auth()->user()->id)->first();
+		$order=DB::select('SELECT * FROM orders JOIN order_product ON orders.id = order_product.order_id JOIN products ON order_product.product_id = products.id WHERE products.id_store = ?', [$store->id]);
+		//return $order;
+		return view('Store.order-list')->with([
+			'order' => $order
+		]);
+	}
 }
