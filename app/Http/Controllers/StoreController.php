@@ -59,7 +59,6 @@ class StoreController extends Controller
                 }
             }
             $product->images = $array_images;
-            return var_dump($product->images);
             $product->save(); 
         return redirect()->route('store.my-store')
         ->with('success_message', 'Thêm sản phẩm mới thành công!');

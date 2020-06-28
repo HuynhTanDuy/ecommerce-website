@@ -21,6 +21,35 @@
         <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 
         @yield('extra-css')
+        <style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.menu-store {
+    flex-direction: column;
+    width: 19vw;
+}
+
+.dropdown-content {
+    background: #535353;
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  
+}
+.dropdown-content a {
+    color: black;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  cursor: pointer;
+}
+</style>
     </head>
 
 
