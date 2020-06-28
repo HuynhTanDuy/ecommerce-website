@@ -47,7 +47,7 @@
 						<th scope="col">Đơn giá</th>
 						<th scope="col" style="width: 130px;">Số lượng hàng có sẵn</th>
 						<th scope="col" style="width:350px">Ảnh đại diện sản phẩm</th>
-						<th scope="col">Danh sách ảnh sản phầm</th>
+						{{-- <th scope="col">Danh sách ảnh sản phầm</th> --}}
 						<th scope="col">Chi tiết</th>
 						<th scope="col">Mô tả</th>
 						<th scope="col">Sửa</th>
@@ -66,9 +66,9 @@
 						<td><img src="img/products/{{$product->image}}"></td>
 						<td>
 						
-							@foreach ($product->images as $item)
+							{{-- @foreach ($product->images as $item)
 								<img src="img/products/{{$item}}">
-							@endforeach
+							@endforeach --}}
 						
 						</td>
 						<td>...</td>
