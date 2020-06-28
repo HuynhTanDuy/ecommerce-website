@@ -22,6 +22,43 @@ class StoreController extends Controller
         return view('Store.add-product');
     }
 
+    public function addProduct(Request $request) {
+        $store = Store::where('id_owner', auth()->user()->id)->first();
+        //echo $request;
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'details'=>  $request->details,
+            'description'=> $request->description,
+            'images'=> $request->images,
+            'slug' => $request->slug,
+            'id_store' => $store->id,
+            'quantity' => $request->quantity
+            ]);
+            return $request;
+            if($request->hasFile('image')) {
+                $file=$request->file('image');
+                $name=$file->getClientOriginalName();
+                $avatar=str_random(4)."_". $name;
+                $duoi=$file->getClientOriginalExtension();
+                echo $file;
+                while(file_exists("img/products/".$avatar))
+                {
+                    $avatarHinh=str_random(4)."_".$name;
+                }
+                $file->move("img/products/",$avatar);
+                    
+                $product->image=$avatar;
+            }
+            else {
+                $product->image="";
+            }
+            $product->save(); 
+        //return $product;
+        return redirect()->route('store.my-store')
+        ->with('success_message', 'Thêm sản phẩm mới thành công!');
+    }
+
     public function updateProductIndex($id) {
         $product = Product::where('id', $id)->first();
         $images = $product->images;

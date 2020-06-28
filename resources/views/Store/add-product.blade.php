@@ -11,7 +11,9 @@
     @component('components.breadcrumbs')
         <a href="/">Home</a>
         <i class="fa fa-chevron-right breadcrumb-separator"></i>
-        <span>My Profile</span>
+		<span>Quản lí cửa hàng</span>
+		<i class="fa fa-chevron-right breadcrumb-separator"></i>
+        <span>Thêm sản phẩm mới</span>
     @endcomponent
 
     <div class="container">
@@ -43,7 +45,7 @@
 					<h1 class="stylish-heading">Thêm sản phẩm mới</h1>
 				</div>
 				<div class="add-product-section">
-					<form action="{{ route('store.add-product') }}" method="POST">
+					<form action="{{ route('store.add-product-action') }}" method="POST">
 							@method('post')
 							@csrf
 							<div class="form-control">
@@ -52,11 +54,11 @@
 							</div>
 							<div class="form-control">
 									<div class="label">Slug</div>
-									<input id="phone_number" type="text" name="slug">
+									<input id="phone_number" type="text" name="slug" required>
 							</div>
 							<div class="form-control">
 									<div class="label">Chi tiết</div>
-									<input id="email" type="email" name="details" required>
+									<input id="email" type="text" name="details" required>
 							</div>
 							<div class="form-control">
 									<div class="label">Đơn giá</div>
@@ -74,13 +76,14 @@
 							</div>
 							<div class="form-control">
 								<div class="label">Hình ảnh</div>
+								<input required="" type="file" name="image" accept="image/*">
 
 							</div>
 							<div class="form-control">
 								<div class="label">Danh sách ảnh chi tiết sản phẩm</div>
-			
+								<input required="" type="file" name="images" accept="image/*">
 							</div>
-							<button id="register" type="submit" class="add-product-button">Đăng kí</button>
+							<button id="register" type="submit" class="add-product-button">Thêm</button>
 					</form>
 				</div>
             <div>

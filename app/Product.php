@@ -8,9 +8,9 @@ use Laravel\Scout\Searchable;
 use Nicolaslopezj\Searchable\SearchableTrait;
 class Product extends Model
 {
-    use SearchableTrait, Searchable;
+    //use SearchableTrait, Searchable;
 
-    protected $fillable = ['name, price, details, description, image, images, slug, id_store, quantity'];
+    protected $fillable = ['name','slug', 'details', 'description', 'featured', 'quantity','image', 'images', 'id_store'];
 
     /**
      * Searchable rules.
