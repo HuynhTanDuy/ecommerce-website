@@ -31,7 +31,7 @@ class CheckoutRequest extends FormRequest
             'address' => 'required',
             'city' => 'required',
             'province' => 'required',
-            'postalcode' => 'required',
+            // 'postalcode' => 'required',
             'phone' => 'required',
         ];
     }

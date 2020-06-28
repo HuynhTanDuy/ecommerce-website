@@ -32,13 +32,14 @@
                 </div>
             @endif
 
-            @if (Cart::count() > 0)
+            {{-- @if (Cart::count() > 0) --}}
 
-            <h2>{{ Cart::count() }} item(s) in Shopping Cart</h2>
+            <h2>Shopping Cart</h2>
 
             <div class="cart-table">
                 @foreach ($products as $item)
                 <div class="cart-table-row">
+                    <input type="hidden" id="product_id" value="{{$item->id}}">
                     <div class="cart-table-row-left">
                         <a href="{{ route('shop.show', $item->slug) }}"><img src="{{ productImage($item->image) }}" alt="item" class="cart-table-img"></a>
                         <div class="cart-item-details">
@@ -62,13 +63,14 @@
                             </form>
                         </div>
                         <div>
-                            <select class="quantity" data-id="{{ $item->id }}" data-productQuantity="{{ $item->quantity }}">
+                            {{-- <select class="quantity" data-id="{{ $item->id }}" data-productQuantity="{{ $item->quantity }}">
                                 @for ($i = 1; $i < 5 + 1 ; $i++)
                                     <option {{ $item->quantity == $i ? 'selected' : '' }}>{{ $i }}</option>
                                 @endfor
-                            </select>
+                            </select> --}}
+                            <input type="number" name="quantity" min="1" id="quantity_{{$item->id}}" value="{{$item->quantity_cart}}"  style="width: 45px;" onchange="changeQuantity({{$item->id}})">
                         </div>
-                        <div>{{ presentPrice($item->price) }}</div>
+                        <div id="price_item_{{$item->id}}">{{ presentPrice($item->price * $item->quantity_cart ) }}</div>
                     </div>
                 </div> <!-- end cart-table-row -->
                 @endforeach
@@ -95,7 +97,7 @@
 
                 <div class="cart-totals-right">
                     <div>
-                        Subtotal <br>
+                        Tạm tính <br>
                         @if (session()->has('coupon'))
                             Code ({{ session()->get('coupon')['name'] }})
                             <form action="{{ route('coupon.destroy') }}" method="POST" style="display:block">
@@ -104,69 +106,75 @@
                                 <button type="submit" style="font-size:14px;">Remove</button>
                             </form>
                             <hr>
-                            New Subtotal <br>
+                            {{-- New Subtotal <br> --}}
                         @endif
-                        Tax ({{config('cart.tax')}}%)<br>
-                        <span class="cart-totals-total">Total</span>
+                        {{-- Tax ({{config('cart.tax')}}%)<br> --}}
+                        <span class="cart-totals-total">Thành tiền</span>
                     </div>
                     <div class="cart-totals-subtotal">
-                        {{ presentPrice(Cart::subtotal()) }} <br>
+                        {{ presentPrice($sub_total) }} <br>
                         @if (session()->has('coupon'))
                             -{{ presentPrice($discount) }} <br>&nbsp;<br>
                             <hr>
-                            {{ presentPrice($newSubtotal) }} <br>
+                            {{-- {{ presentPrice($newSubtotal) }} <br> --}}
                         @endif
-                        {{ presentPrice($newTax) }} <br>
-                        <span class="cart-totals-total">{{ presentPrice($newTotal) }}</span>
+                        {{-- {{ presentPrice($newTax) }} <br> --}}
+                        <span class="cart-totals-total">{{ presentPrice($final_total) }}</span>
                     </div>
                 </div>
             </div> <!-- end cart-totals -->
 
             <div class="cart-buttons">
-                <a href="{{ route('shop.index') }}" class="button">Continue Shopping</a>
+                <a href="{{ route('shop.index') }}" class="button">Continues Shopping</a>
                 <a href="{{ route('checkout.index') }}" class="button-primary">Proceed to Checkout</a>
             </div>
 
-            @else
+           {{--  @else
 
                 <h3>No items in Cart!</h3>
                 <div class="spacer"></div>
                 <a href="{{ route('shop.index') }}" class="button">Continue Shopping</a>
                 <div class="spacer"></div>
 
-            @endif
+            @endif --}}
 
-            @if (Cart::instance('saveForLater')->count() > 0)
-
-            <h2>{{ Cart::instance('saveForLater')->count() }} item(s) Saved For Later</h2>
+            {{-- @if (Cart::instance('saveForLater')->count() > 0) --}}
+            @if (count($saveForLater) > 0)
+            <h2> Saved For Later</h2>
 
             <div class="saved-for-later cart-table">
-                @foreach (Cart::instance('saveForLater')->content() as $item)
+                @foreach ($saveForLater as $item)
                 <div class="cart-table-row">
                     <div class="cart-table-row-left">
-                        <a href="{{ route('shop.show', $item->model->slug) }}"><img src="{{ asset('img/products/'.$item->model->slug.'.jpg') }}" alt="item" class="cart-table-img"></a>
+                        <a href="{{ route('shop.show', $item->slug) }}"><img src="{{ asset('img/products/'.$item->slug.'.jpg') }}" alt="item" class="cart-table-img"></a>
                         <div class="cart-item-details">
-                            <div class="cart-table-item"><a href="{{ route('shop.show', $item->model->slug) }}">{{ $item->model->name }}</a></div>
-                            <div class="cart-table-description">{{ $item->model->details }}</div>
+                            <div class="cart-table-item"><a href="{{ route('shop.show', $item->slug) }}">{{ $item->name }}</a></div>
+                            <div class="cart-table-description">{{ $item->details }}</div>
                         </div>
                     </div>
                     <div class="cart-table-row-right">
                         <div class="cart-table-actions">
-                            <form action="{{ route('saveForLater.destroy', $item->rowId) }}" method="POST">
+                            {{-- <form action="{{ route('saveForLater.destroy', $item->id) }}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <button type="submit" class="cart-options">Remove</button>
+                            </form> --}}
+                            <form action="{{ route('cart.destroy', $item->id) }}" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
                                 <button type="submit" class="cart-options">Remove</button>
                             </form>
 
-                            <form action="{{ route('saveForLater.switchToCart', $item->rowId) }}" method="POST">
+                            <form action="{{ route('saveForLater.switchToCart', $item->id) }}" method="POST">
                                 {{ csrf_field() }}
 
                                 <button type="submit" class="cart-options">Move to Cart</button>
                             </form>
                         </div>
 
-                        <div>{{ $item->model->presentPrice() }}</div>
+                        <div>{{ presentPrice($item->price, $item->quantity_cart) }}</div>
                     </div>
                 </div> <!-- end cart-table-row -->
                 @endforeach
@@ -177,7 +185,7 @@
 
             <h3>You have no items Saved for Later.</h3>
 
-            @endif
+            @endif 
 
         </div>
 
@@ -191,29 +199,55 @@
 @section('extra-js')
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
-        (function(){
-            const classname = document.querySelectorAll('.quantity')
+        // (function(){
+        //     const classname = document.querySelectorAll('.quantity')
 
-            Array.from(classname).forEach(function(element) {
-                element.addEventListener('change', function() {
-                    const id = element.getAttribute('data-id')
-                    const productQuantity = element.getAttribute('data-productQuantity')
+        //     Array.from(classname).forEach(function(element) {
+        //         element.addEventListener('change', function() {
+        //             const id = element.getAttribute('data-id')
+        //             const productQuantity = element.getAttribute('data-productQuantity')
 
-                    axios.patch(`/cart/${id}`, {
-                        quantity: this.value,
-                        productQuantity: productQuantity
-                    })
-                    .then(function (response) {
-                        // console.log(response);
-                        window.location.href = '{{ route('cart.index') }}'
-                    })
-                    .catch(function (error) {
-                        // console.log(error);
-                        window.location.href = '{{ route('cart.index') }}'
-                    });
-                })
-            })
-        })();
+        //             axios.patch(`/cart/${id}`, {
+        //                 quantity: this.value,
+        //                 productQuantity: productQuantity
+        //             })
+        //             .then(function (response) {
+        //                 // console.log(response);
+        //                 window.location.href = '{{ route('cart.index') }}'
+        //             })
+        //             .catch(function (error) {
+        //                 // console.log(error);
+        //                 window.location.href = '{{ route('cart.index') }}'
+        //             });
+        //         })
+        //     })
+        // })();
+        $.ajaxSetup({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+
+        });
+        
+        function changeQuantity(product_id) {
+            var quantity = $("#quantity_"+product_id).val();
+            $.ajax({
+                url: "/quantity/cart",
+                type: "POST",
+                data: {
+                    "product_id" : product_id,
+                    "quantity" : quantity
+                },
+                success: function(response){
+                    // var id="#price_item_" + product_id;
+                    // $(id).html(response.data.price);
+                    window.location.href = '{{ route('cart.index') }}';
+                }});
+
+
+        }
+        
+
     </script>
 
     <!-- Include AlgoliaSearch JS Client and autocomplete.js library -->

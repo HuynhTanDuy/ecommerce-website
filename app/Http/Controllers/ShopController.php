@@ -76,9 +76,19 @@ class ShopController extends Controller
         //                    ->orWhere('description', 'like', "%$query%")
         //                    ->paginate(10);
 
-        $products = Product::search($query)->paginate(10);
+        //$products = Product::search($query)->paginate(10);
+        $products = Product::where('name', 'LIKE', '%'.$query.'%')->orWhere('slug', 'LIKE', '%'.$query.'%');
 
-        return view('search-results')->with('products', $products);
+        //return view('search-results')->with('products', $products);
+        $categories = Category::all();
+        $categoryName='Kết quả tìm kiếm';
+        $pagination=9;
+        $products = $products->paginate($pagination);
+        return view('shop')->with([
+            'products' => $products,
+            'categories' => $categories,
+            'categoryName' => $categoryName,
+        ]);
     }
 
     public function searchAlgolia(Request $request)

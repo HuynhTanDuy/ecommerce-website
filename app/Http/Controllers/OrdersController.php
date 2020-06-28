@@ -6,7 +6,9 @@ use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Cart;
+use App\Product;
+use App\User;
 class OrdersController extends Controller
 {
     /**
@@ -100,7 +102,11 @@ class OrdersController extends Controller
 
     public function test()
     {
-        $id_cart=DB::select('select * from cart where id_user=?',[3]);
-        return $id_cart;
+        return User::create([
+            'name' =>'user_test1',
+            'email' => 'testemail',
+            'password' => bcrypt('123456'),
+        ]);
+        return $product;
     }
 }

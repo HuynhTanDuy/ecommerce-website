@@ -34,9 +34,9 @@
 
     <div class="search-results-container container">
         <h1>Search Results</h1>
-        <p class="search-results-count">{{ $products->total() }} result(s) for '{{ request()->input('query') }}'</p>
+        <p class="search-results-count">{{ $products->count() }} result(s) for '{{ request()->input('query') }}'</p>
 
-        @if ($products->total() > 0)
+        @if ($products->count() > 0)
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -58,7 +58,7 @@
             </tbody>
         </table>
 
-        {{ $products->appends(request()->input())->links() }}
+       {{--  {{ $products->appends(request()->input())->links() }} --}}
         @endif
     </div> <!-- end search-results-container -->
 

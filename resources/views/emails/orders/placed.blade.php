@@ -1,31 +1,33 @@
 @component('mail::message')
-# Order Received
+# Xác nhận đơn hàng
 
-Thank you for your order.
+Cảm ơn quý khách đã đặt hàng tại Ecommerce Website.
 
-**Order ID:** {{ $order->id }}
+# THÔNG TIN ĐƠN HÀNG
 
-**Order Email:** {{ $order->billing_email }}
+**Mã đơn hàng:** {{ $order->id }}
 
-**Order Name:** {{ $order->billing_name }}
+**Email:** {{ $order->billing_email }}
 
-**Order Total:** ${{ round($order->billing_total / 100, 2) }}
+**Họ tên Khách hàng:** {{ $order->billing_name }}
 
-**Items Ordered**
+**Tổng tiền:** ${{ round($order->billing_total / 100, 2) }}
+
+**Chi tiết đơn hàng**
 
 @foreach ($order->products as $product)
-Name: {{ $product->name }} <br>
-Price: ${{ round($product->price / 100, 2)}} <br>
-Quantity: {{ $product->pivot->quantity }} <br>
+Tên: {{ $product->name }} <br>
+Giá: ${{ round($product->price / 100, 2)}} <br>
+Số lượng: {{ $product->pivot->quantity }} <br>
 @endforeach
 
-You can get further details about your order by logging into our website.
+Xem thêm tại website của chúng tôi
 
 @component('mail::button', ['url' => config('app.url'), 'color' => 'green'])
 Go to Website
 @endcomponent
 
-Thank you again for choosing us.
+Cảm ơn vì đã lựa chọn chúng tôi.
 
 Regards,<br>
 {{ config('app.name') }}

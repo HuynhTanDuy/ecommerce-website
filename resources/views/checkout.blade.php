@@ -71,17 +71,17 @@
                     </div> <!-- end half-form -->
 
                     <div class="half-form">
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="postalcode">Postal Code</label>
                             <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{ old('postalcode') }}" required>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label for="phone">Phone</label>
                             <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" required>
                         </div>
                     </div> <!-- end half-form -->
 
-                    <div class="spacer"></div>
+                    {{-- <div class="spacer"></div>
 
                     <h2>Payment Details</h2>
 
@@ -101,14 +101,14 @@
                         <!-- Used to display form errors -->
                         <div id="card-errors" role="alert"></div>
                     </div>
-                    <div class="spacer"></div>
+                    <div class="spacer"></div> --}}
 
                     <button type="submit" id="complete-order" class="button-primary full-width">Complete Order</button>
 
 
                 </form>
 
-                @if ($paypalToken)
+                {{-- @if ($paypalToken)
                     <div class="mt-32">or</div>
                     <div class="mt-32">
                         <h2>Pay with PayPal</h2>
@@ -125,7 +125,7 @@
                             <button class="button-primary" type="submit"><span>Pay with PayPal</span></button>
                         </form>
                     </div>
-                @endif
+                @endif --}}
             </div>
 
 
@@ -134,19 +134,20 @@
                 <h2>Your Order</h2>
 
                 <div class="checkout-table">
-                    @foreach (Cart::content() as $item)
+                    {{-- @foreach (Cart::content() as $item) --}}
+                    @foreach ($products as $item)
                     <div class="checkout-table-row">
                         <div class="checkout-table-row-left">
-                            <img src="{{ productImage($item->model->image) }}" alt="item" class="checkout-table-img">
+                            <img src="{{ productImage($item->image) }}" alt="item" class="checkout-table-img">
                             <div class="checkout-item-details">
-                                <div class="checkout-table-item">{{ $item->model->name }}</div>
-                                <div class="checkout-table-description">{{ $item->model->details }}</div>
-                                <div class="checkout-table-price">{{ $item->model->presentPrice() }}</div>
+                                <div class="checkout-table-item">{{ $item->name }}</div>
+                                <div class="checkout-table-description">{{ $item->details }}</div>
+                                <div class="checkout-table-price">{{ presentPrice($item->price) }}</div>
                             </div>
                         </div> <!-- end checkout-table -->
 
                         <div class="checkout-table-row-right">
-                            <div class="checkout-table-quantity">{{ $item->qty }}</div>
+                            <div class="checkout-table-quantity">{{ $item->quantity_cart }}</div>
                         </div>
                     </div> <!-- end checkout-table-row -->
                     @endforeach
@@ -155,27 +156,27 @@
 
                 <div class="checkout-totals">
                     <div class="checkout-totals-left">
-                        Subtotal <br>
+                        Tạm tính <br>
                         @if (session()->has('coupon'))
                             Discount ({{ session()->get('coupon')['name'] }}) :
                             <br>
                             <hr>
-                            New Subtotal <br>
+                           
                         @endif
-                        Tax ({{config('cart.tax')}}%)<br>
-                        <span class="checkout-totals-total">Total</span>
+                        {{-- Tax ({{config('cart.tax')}}%)<br> --}}
+                        <span class="checkout-totals-total">Thành tiền</span>
 
                     </div>
 
                     <div class="checkout-totals-right">
-                        {{ presentPrice(Cart::subtotal()) }} <br>
+                        {{ presentPrice($sub_total) }} <br>
                         @if (session()->has('coupon'))
                             -{{ presentPrice($discount) }} <br>
                             <hr>
-                            {{ presentPrice($newSubtotal) }} <br>
+                            
                         @endif
-                        {{ presentPrice($newTax) }} <br>
-                        <span class="checkout-totals-total">{{ presentPrice($newTotal) }}</span>
+                        {{-- {{ presentPrice($newTax) }} <br> --}}
+                        <span class="checkout-totals-total">{{ presentPrice($final_total) }}</span>
 
                     </div>
                 </div> <!-- end checkout-totals -->
@@ -187,134 +188,124 @@
 @endsection
 
 @section('extra-js')
-    <script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>
+    {{-- <script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script> --}}
 
     <script>
-        (function(){
-            // Create a Stripe client
-            var stripe = Stripe('{{ config('services.stripe.key') }}');
+        // (function(){
+        //     // Create a Stripe client
+        //     var stripe = Stripe('{{ config('services.stripe.key') }}');
 
-            // Create an instance of Elements
-            var elements = stripe.elements();
+        //     // Create an instance of Elements
+        //     var elements = stripe.elements();
 
-            // Custom styling can be passed to options when creating an Element.
-            // (Note that this demo uses a wider set of styles than the guide below.)
-            var style = {
-              base: {
-                color: '#32325d',
-                lineHeight: '18px',
-                fontFamily: '"Roboto", Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: 'antialiased',
-                fontSize: '16px',
-                '::placeholder': {
-                  color: '#aab7c4'
-                }
-              },
-              invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a'
-              }
-            };
+        //     // Custom styling can be passed to options when creating an Element.
+        //     // (Note that this demo uses a wider set of styles than the guide below.)
+        //     var style = {
+        //       base: {
+        //         color: '#32325d',
+        //         lineHeight: '18px',
+        //         fontFamily: '"Roboto", Helvetica Neue", Helvetica, sans-serif',
+        //         fontSmoothing: 'antialiased',
+        //         fontSize: '16px',
+        //         '::placeholder': {
+        //           color: '#aab7c4'
+        //         }
+        //       },
+        //       invalid: {
+        //         color: '#fa755a',
+        //         iconColor: '#fa755a'
+        //       }
+        //     };
 
-            // Create an instance of the card Element
-            var card = elements.create('card', {
-                style: style,
-                hidePostalCode: true
-            });
+        //     // Create an instance of the card Element
+        //     var card = elements.create('card', {
+        //         style: style,
+        //         hidePostalCode: true
+        //     });
 
-            // Add an instance of the card Element into the `card-element` <div>
-            card.mount('#card-element');
+        //     // Add an instance of the card Element into the `card-element` <div>
+        //     card.mount('#card-element');
 
-            // Handle real-time validation errors from the card Element.
-            card.addEventListener('change', function(event) {
-              var displayError = document.getElementById('card-errors');
-              if (event.error) {
-                displayError.textContent = event.error.message;
-              } else {
-                displayError.textContent = '';
-              }
-            });
+        //     // Handle real-time validation errors from the card Element.
+        //     card.addEventListener('change', function(event) {
+        //       var displayError = document.getElementById('card-errors');
+        //       if (event.error) {
+        //         displayError.textContent = event.error.message;
+        //       } else {
+        //         displayError.textContent = '';
+        //       }
+        //     });
 
-            // Handle form submission
-            var form = document.getElementById('payment-form');
-            form.addEventListener('submit', function(event) {
-              event.preventDefault();
+        //     // Handle form submission
+        //     var form = document.getElementById('payment-form');
+        //     form.addEventListener('submit', function(event) {
+        //       event.preventDefault();
 
-              // Disable the submit button to prevent repeated clicks
-              document.getElementById('complete-order').disabled = true;
+        //       // Disable the submit button to prevent repeated clicks
+        //       document.getElementById('complete-order').disabled = true;
 
-              var options = {
-                name: document.getElementById('name_on_card').value,
-                address_line1: document.getElementById('address').value,
-                address_city: document.getElementById('city').value,
-                address_state: document.getElementById('province').value,
-                address_zip: document.getElementById('postalcode').value
-              }
+        //       var options = {
+        //         name: document.getElementById('name_on_card').value,
+        //         address_line1: document.getElementById('address').value,
+        //         address_city: document.getElementById('city').value,
+        //         address_state: document.getElementById('province').value,
+        //         address_zip: document.getElementById('postalcode').value
+        //       }
 
-              stripe.createToken(card, options).then(function(result) {
-                if (result.error) {
-                  // Inform the user if there was an error
-                  var errorElement = document.getElementById('card-errors');
-                  errorElement.textContent = result.error.message;
+        //       stripe.createToken(card, options).then(function(result) {
+        //         if (result.error) {
+        //           // Inform the user if there was an error
+        //           var errorElement = document.getElementById('card-errors');
+        //           errorElement.textContent = result.error.message;
 
-                  // Enable the submit button
-                  document.getElementById('complete-order').disabled = false;
-                } else {
-                  // Send the token to your server
-                  stripeTokenHandler(result.token);
-                }
-              });
-            });
+        //           // Enable the submit button
+        //           document.getElementById('complete-order').disabled = false;
+        //         } else {
+        //           // Send the token to your server
+        //           stripeTokenHandler(result.token);
+        //         }
+        //       });
+        //     });
 
-            function stripeTokenHandler(token) {
-              // Insert the token ID into the form so it gets submitted to the server
-              var form = document.getElementById('payment-form');
-              var hiddenInput = document.createElement('input');
-              hiddenInput.setAttribute('type', 'hidden');
-              hiddenInput.setAttribute('name', 'stripeToken');
-              hiddenInput.setAttribute('value', token.id);
-              form.appendChild(hiddenInput);
+            
 
-              // Submit the form
-              form.submit();
-            }
+        //     // PayPal Stuff
+        //     var form = document.querySelector('#paypal-payment-form');
+            
 
-            // PayPal Stuff
-            var form = document.querySelector('#paypal-payment-form');
-            var client_token = "{{ $paypalToken }}";
+        //     braintree.dropin.create({
+        //       authorization: client_token,
+        //       selector: '#bt-dropin',
+        //       paypal: {
+        //         flow: 'vault'
+        //       }
+        //     }, function (createErr, instance) {
+        //       if (createErr) {
+        //         console.log('Create Error', createErr);
+        //         return;
+        //       }
 
-            braintree.dropin.create({
-              authorization: client_token,
-              selector: '#bt-dropin',
-              paypal: {
-                flow: 'vault'
-              }
-            }, function (createErr, instance) {
-              if (createErr) {
-                console.log('Create Error', createErr);
-                return;
-              }
+        //       // remove credit card option
+        //       var elem = document.querySelector('.braintree-option__card');
+        //       elem.parentNode.removeChild(elem);
 
-              // remove credit card option
-              var elem = document.querySelector('.braintree-option__card');
-              elem.parentNode.removeChild(elem);
+        //       form.addEventListener('submit', function (event) {
+        //         event.preventDefault();
 
-              form.addEventListener('submit', function (event) {
-                event.preventDefault();
+        //         instance.requestPaymentMethod(function (err, payload) {
+        //           if (err) {
+        //             console.log('Request Payment Method Error', err);
+        //             return;
+        //           }
 
-                instance.requestPaymentMethod(function (err, payload) {
-                  if (err) {
-                    console.log('Request Payment Method Error', err);
-                    return;
-                  }
+        //           // Add the nonce to the form and submit
+        //           document.querySelector('#nonce').value = payload.nonce;
+        //           form.submit();
+        //         });
+        //       });
+        //     });
 
-                  // Add the nonce to the form and submit
-                  document.querySelector('#nonce').value = payload.nonce;
-                  form.submit();
-                });
-              });
-            });
-
-        })();
+        // })();
+        
     </script>
 @endsection
