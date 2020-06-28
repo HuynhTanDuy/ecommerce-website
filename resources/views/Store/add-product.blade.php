@@ -45,7 +45,7 @@
 					<h1 class="stylish-heading">Thêm sản phẩm mới</h1>
 				</div>
 				<div class="add-product-section">
-					<form action="{{ route('store.add-product-action') }}" method="POST">
+					<form action="{{ route('store.add-product-action') }}" method="POST" enctype="multipart/form-data">
 							@method('post')
 							@csrf
 							<div class="form-control">
@@ -76,12 +76,12 @@
 							</div>
 							<div class="form-control">
 								<div class="label">Hình ảnh</div>
-								<input required="" type="file" name="image" accept="image/*">
+								<input required type="file" name="image" accept="image/*">
 
 							</div>
 							<div class="form-control">
 								<div class="label">Danh sách ảnh chi tiết sản phẩm</div>
-								<input required="" type="file" name="images" accept="image/*">
+								<input required type="file" name="images[]" multiple accept="image/*">
 							</div>
 							<button id="register" type="submit" class="add-product-button">Thêm</button>
 					</form>

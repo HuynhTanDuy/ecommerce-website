@@ -11,7 +11,6 @@ class StoreController extends Controller
     public function index() {
         $store = Store::where('id_owner', auth()->user()->id)->first();
         $products = Product::where('id_store', $store->id)->get();
-
         return view('Store.my-store')->with([
             'store' => $store,
             'products' => $products
@@ -30,31 +29,38 @@ class StoreController extends Controller
             'price' => $request->price,
             'details'=>  $request->details,
             'description'=> $request->description,
-            'images'=> $request->images,
             'slug' => $request->slug,
             'id_store' => $store->id,
             'quantity' => $request->quantity
             ]);
-            return $request;
+
             if($request->hasFile('image')) {
                 $file=$request->file('image');
                 $name=$file->getClientOriginalName();
                 $avatar=str_random(4)."_". $name;
                 $duoi=$file->getClientOriginalExtension();
-                echo $file;
                 while(file_exists("img/products/".$avatar))
                 {
                     $avatarHinh=str_random(4)."_".$name;
                 }
                 $file->move("img/products/",$avatar);
-                    
                 $product->image=$avatar;
             }
             else {
                 $product->image="";
             }
+            $array_images = array();
+            if($request->hasFile('images')) {
+                $images = $request->file('images');
+                foreach($images as $image){
+                    $name=$image->getClientOriginalName();
+                    $image->move('img/products/',$name);
+                    $array_images[] = $name;
+                }
+            }
+            $product->images = $array_images;
+            return var_dump($product->images);
             $product->save(); 
-        //return $product;
         return redirect()->route('store.my-store')
         ->with('success_message', 'Thêm sản phẩm mới thành công!');
     }

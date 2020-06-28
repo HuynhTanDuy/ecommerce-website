@@ -75,14 +75,14 @@
 							</div>
 							<div class="form-control">
                                 <div class="label">Hình ảnh</div>
-                                <img src="{{ $product->image}}">
+                                <img style ="width: 30vw" src="http://localhost:8000/img/products/{{ $product->image}}">
 
 							</div>
 							<div class="form-control">
                                 <div class="label">Danh sách ảnh chi tiết sản phẩm</div>
                                 @foreach( $images as $img)
-                                    <img src = "{{$img}}">
-                                    @endforeach
+                                    <img style ="width: 10vw; margin-right:40px; height:20vh" src = "http://localhost:8000/img/products/{{$img}}">
+								@endforeach
 							</div>
 							<button id="register" type="submit" class="add-product-button">Cập nhật</button>
 					</form>

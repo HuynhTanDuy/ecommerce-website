@@ -64,7 +64,13 @@
 						<td>{{ $product->price }}</td>
 						<td>{{ $product->quantity }}</td>
 						<td><img src="img/products/{{$product->image}}"></td>
-						<td>...</td>
+						<td>
+						
+							@foreach ($product->images as $item)
+								<img src="img/products/{{$item}}">
+							@endforeach
+						
+						</td>
 						<td>...</td>
 						<td>...</td>
 						<td><a id="register" style ="padding: 10px 32px;"class="register-shop-button" 
