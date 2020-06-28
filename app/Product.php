@@ -90,4 +90,10 @@ class Product extends Model
         $update = DB::update("update products set quantity = ? where id= ?", [$sub, $product_id]);
         return $update;
     }
+
+    public static function addProductCategory($product_id,$category_id)
+    {
+        $data = DB::insert('insert into category_product (product_id,category_id) value (?,?)',[$product_id,$category_id]);
+        return $data;
+    }
 }
