@@ -9,9 +9,9 @@
 @section('content')
 
     @component('components.breadcrumbs')
-        <a href="#">Home</a>
+        <a href="#">Trang chủ</a>
         <i class="fa fa-chevron-right breadcrumb-separator"></i>
-        <span>Shopping Cart</span>
+        <span>Giỏ hàng</span>
     @endcomponent
 
     <div class="cart-section container">
@@ -34,7 +34,7 @@
 
             {{-- @if (Cart::count() > 0) --}}
 
-            <h2>Shopping Cart</h2>
+            <h2>Giỏ hàng</h2>
 
             <div class="cart-table">
                 @foreach ($products as $item)
@@ -53,13 +53,13 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
-                                <button type="submit" class="cart-options">Remove</button>
+                                <button type="submit" class="cart-options">Xóa</button>
                             </form>
 
                             <form action="{{ route('cart.switchToSaveForLater', $item->id) }}" method="POST">
                                 {{ csrf_field() }}
 
-                                <button type="submit" class="cart-options">Save for Later</button>
+                                <button type="submit" class="cart-options">Để dành mua sau</button>
                             </form>
                         </div>
                         <div>
@@ -79,20 +79,20 @@
 
             @if (! session()->has('coupon'))
 
-                <a href="#" class="have-code">Have a Code?</a>
+                <a href="#" class="have-code">Mã giảm giá</a>
 
                 <div class="have-code-container">
                     <form action="{{ route('coupon.store') }}" method="POST">
                         {{ csrf_field() }}
                         <input type="text" name="coupon_code" id="coupon_code">
-                        <button type="submit" class="button button-plain">Apply</button>
+                        <button type="submit" class="button button-plain" style="width: 200px;">Áp dụng</button>
                     </form>
                 </div> <!-- end have-code-container -->
             @endif
 
             <div class="cart-totals">
                 <div class="cart-totals-left">
-                    Shipping is free because we’re awesome like that. Also because that’s additional stuff I don’t feel like figuring out :).
+                    {{-- Shipping is free because we’re awesome like that. Also because that’s additional stuff I don’t feel like figuring out :). --}}
                 </div>
 
                 <div class="cart-totals-right">
@@ -125,8 +125,8 @@
             </div> <!-- end cart-totals -->
 
             <div class="cart-buttons">
-                <a href="{{ route('shop.index') }}" class="button">Continues Shopping</a>
-                <a href="{{ route('checkout.index') }}" class="button-primary">Proceed to Checkout</a>
+                <a href="{{ route('shop.index') }}" class="button">Tiếp tục mua sắm</a>
+                <a href="{{ route('checkout.index') }}" class="button-primary">Tiến hành đặt hàng</a>
             </div>
 
            {{--  @else
@@ -183,7 +183,7 @@
 
             @else
 
-            <h3>You have no items Saved for Later.</h3>
+            <h3>Bạn không có sản phẩm để dành mua sau nào !</h3>
 
             @endif 
 
@@ -192,7 +192,7 @@
     </div> <!-- end cart-section -->
 
     @include('partials.might-like')
-
+    
 
 @endsection
 

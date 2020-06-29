@@ -22,7 +22,7 @@
         <a href="{{ route('logout') }}"
             onclick="event.preventDefault();
                      document.getElementById('logout-form').submit();">
-            Logout
+            Đăng xuất
         </a>
     </li>
 
@@ -30,7 +30,7 @@
         {{ csrf_field() }}
     </form>
     @endguest
-    <li><a href="{{ route('cart.index') }}">Cart
+    <li><a href="{{ route('cart.index') }}">Giỏ hàng
     @if (Cart::instance('default')->count() > 0)
     <span class="cart-count"><span>{{ Cart::instance('default')->count() }}</span></span>
     @endif
