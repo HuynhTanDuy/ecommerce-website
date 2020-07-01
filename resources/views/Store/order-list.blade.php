@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'My Profile')
+@section('title', 'Quản lí cửa hàng')
 
 @section('extra-css')
     <link rel="stylesheet" href="{{ asset('css/algolia.css') }}">
@@ -9,12 +9,14 @@
 @section('content')
 
     @component('components.breadcrumbs')
-        <a href="/">Home</a>
+        <a href="/">Trang chủ</a>
         <i class="fa fa-chevron-right breadcrumb-separator"></i>
-        <span>My Profile</span>
+        <a href="{{route('store.my-store')}}">Cửa hàng</a>
+        <i class="fa fa-chevron-right breadcrumb-separator"></i>
+        <span>Quản lí đơn hàng</span>
     @endcomponent
 
-    <div class="container">
+    <div class="container" style="max-width:1600px">
         @if (session()->has('success_message'))
             <div class="alert alert-success">
                 {{ session()->get('success_message') }}
@@ -30,47 +32,58 @@
                 </ul>
             </div>
         @endif
-        <div class="store-section container" style="max-width:1200px">
+        <div class="store-section container" style="max-width:1600px">
 			<div class="register-info-section">
             <div class="products-header">
-                <h1 class="stylish-heading"> Quản lí cửa hàng</h1>
+                <h1 class="stylish-heading">Quản lí đơn hàng</h1>
 			</div>
             <div>
 				<table class="table">
 					<thead class="thead-dark">
 					  <tr >
-						<th scope="col" style="max-width: 50px;">Mã SP</th>
-						<th scope="col" style="width: 200px;">Người đặt</th>
-						<th scope="col" style="width:350px">Địa chỉ</th>
+						<th scope="col" >Mã SP</th>
+						<th scope="col">Người đặt</th>
+						<th scope="col">Địa chỉ</th>
 						<th scope="col">Email</th>
 						<th scope="col">Số điện thoại</th>
                         <th scope="col">Đơn giá</th>
 						<th scope="col">Số lượng</th>
 						<th scope="col">Giảm giá</th>
-						<th scope="col">Tổng giá</th>
+                        <th scope="col">Tổng giá</th>
+                        <th scope="col">Chi tiết</th>
+                        <th scope="col">Hoàn thành</th>
                         <th scope="col">Hủy</th>
 					  </tr>
 					</thead>
 					<tbody>
-                    
-                    @foreach($order as $od)
-                    <tr style="
-					  text-align: center;
-				  ">
+                    @foreach($order as $od)  
+                    <tr style="text-align: center;">
 						<td>{{ $od->product_id}}</td>
                         <td>{{ $od->billing_name}}</td>
                         <td>{{ $od->billing_address}}</td>
                         <td>{{ $od->billing_email}}</td>
                         <td>{{ $od->billing_phone}}</td>
                         <td>{{ $od->price}}</td>
-                        <td>{{ $od->quantity}}</td>
+                        <td>{{ $od->order_quantity}}</td>
                         <td>{{ $od->billing_discount}}</td>
                         <td>{{ $od->billing_total}}</td>
+                        <td>
+							<a id="register" type="submit" class="detail-shop-button" 
+						href = "{{ route('order.detail', $od->order_id) }}">Chi tiết</a>
+                        </td>
+                        <td><form action="{{ route('order.finish', $od->order_id) }}" method="POST">
+							@method('post')
+							@csrf
+							<a id="register" type="submit" class="done-shop-button" 
+                        href = "{{ route('order.finish', $od->order_id) }}">Hoàn thành</a>
+                        </form>
+                        </td>
                         <td><form action="#" method="POST">
 							@method('post')
 							@csrf
 							<a id="register" type="submit" class="delete-shop-button" 
-						href = "#">Hủy</a>
+                        href = "#">Hủy</a>
+                        </form>
                         </td>
                     </tr>
                     @endforeach

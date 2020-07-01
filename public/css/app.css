@@ -1707,16 +1707,31 @@ h1.checkout-heading {
   box-shadow: none;
 }
 
-.register-info-section .add-shop-button {
+.register-info-section .add-shop-button,
+.register-info-section .done-shop-button {
   border-color: #a91212;
-  padding: 10px 32px !important;
-  background-color: #b73131;
+  padding: 10px 12px !important;
+  background-color: #119A2D;
   color: #e9e9e9;
   border-radius: 5px;
   padding: 12px 50px;
 }
 
-.register-info-section .add-shop-button:hover {
+.register-info-section .add-shop-button:hover,
+.register-info-section .done-shop-button:hover {
+  background-color: #c54141 !important;
+}
+
+.register-info-section .detail-shop-button {
+  border-color: #a91212;
+  padding: 10px 12px !important;
+  background-color: #35B5CD;
+  color: #e9e9e9;
+  border-radius: 5px;
+  padding: 12px 50px;
+}
+
+.register-info-section .detail-shop-button:hover {
   background-color: #c54141 !important;
 }
 

@@ -51,7 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
     Route::get('/register-store', 'RegisterStoreController@index')->name('store.index');
     Route::post('/register-store', 'RegisterStoreController@register')->name('store.register');
-    Route::get('/register-info', 'RegisterStoreController@registerInfo')->name('store.register-info'); 
+    Route::get('/register-info', 'RegisterStoreController@registerInfo')->name('store.register-info');
+
     Route::get('/my-store', 'StoreController@index')->name('store.my-store');
     Route::get('/my-store/add-product', 'StoreController@addProductIndex')->name('store.add-product');
     Route::post('/my-store/add-product', 'StoreController@addProduct')->name('store.add-product-action');
@@ -59,7 +60,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/my-store/update-product/{id}', 'StoreController@updateProduct')->name('store.update-product-action');
     Route::get('/my-store/delete-product/{id}', 'StoreController@deleteProduct')->name('store.delete-product');
 
-    Route::get('my-store/order-list', 'StoreController@orderList')->name('order.list');
+    Route::get('/my-store/order-list', 'StoreController@orderList')->name('order.list');
+    Route::get('/my-store/order-finished', 'StoreController@orderFinished')->name('order.finish');
+
+    Route::get('/my-store/order-detail/{order_id}', 'StoreController@orderDetail')->name('order.detail');
+    Route::get('/my-store/order-finish/{order_id}', 'StoreController@orderFinish')->name('order.finish');
 });
 
 Route::get('/test','OrdersController@test');
