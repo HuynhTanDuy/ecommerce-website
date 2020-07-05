@@ -1,15 +1,15 @@
 <ul>
     @guest
-    <li><a href="{{ route('register') }}">Đăng kí</a></li>
-    <li><a href="{{ route('login') }}">Đăng nhập</a></li>
+    <li><a style="color: #fdfdfd;" href="{{ route('register') }}">Đăng kí</a></li>
+    <li><a style="color: #fdfdfd;" href="{{ route('login') }}">Đăng nhập</a></li>
     @else
     <li>
-        <a href="{{ route('users.edit') }}">Tài khoản</a>
+        <a style="color: #fdfdfd;" href="{{ route('users.edit') }}">Tài khoản</a>
     </li>
-	<li>
+	<li style="cursor: default">
     <div class="dropdown">
-		<span style="color: #e9e9e9;">Cửa hàng  <i class="fa fa-caret-down"></i></span>
-		<div class="dropdown-content">
+		<span style="color: #fdfdfd;">Cửa hàng  <i class="fa fa-caret-down"></i></span>
+		<div style="margin-left: -45px;" class="dropdown-content">
 		<ul class="menu-store">
 			<li><a href="{{ route('store.my-store')}}">Thông tin cửa hàng</a></li>
 			<li><a href="{{ route('store.my-store')}}">Quản lý sản phẩm</a></li>
@@ -19,7 +19,7 @@
 	</div>
 	</li>
     <li>
-        <a href="{{ route('logout') }}"
+        <a style="color: #fdfdfd;" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                      document.getElementById('logout-form').submit();">
             Đăng xuất
@@ -30,7 +30,7 @@
         {{ csrf_field() }}
     </form>
     @endguest
-    <li><a href="{{ route('cart.index') }}">Giỏ hàng
+    <li><a style="color: #fdfdfd;" href="{{ route('cart.index') }}">Giỏ hàng
     @if (Cart::instance('default')->count() > 0)
     <span class="cart-count"><span>{{ Cart::instance('default')->count() }}</span></span>
     @endif

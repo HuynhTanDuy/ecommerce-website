@@ -5,7 +5,7 @@ use App\Cart;
 
 function presentPrice($price)
 {
-    return number_format($price).'đ';
+    return number_format($price).' đ';
 }
 
 function presentDate($date)
