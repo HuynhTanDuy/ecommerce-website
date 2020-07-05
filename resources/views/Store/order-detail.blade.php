@@ -32,14 +32,7 @@
                 </ul>
             </div>
         @endif
-        <div class="products-section container">
-            <div class="sidebar">
-
-                <ul>
-                <!-- <li class="active"><a href="{{ route('users.edit') }}"></a></li>
-                <li><a href="{{ route('orders.index') }}"></a></li> -->
-                </ul>
-			</div> <!-- end sidebar -->
+        <div class="store-section container">
 			<div class="register-info-section">
             <div class="products-header">
                 <h1 class="stylish-heading">Chi tiết đơn hàng {{ $order->order_id }}</h1>
@@ -47,13 +40,42 @@
             <div>
 				<div class="label-bold">Tên người đặt: <span class="label">{{ $order->billing_name }}</span></div>
                 <div class="label-bold">Số điện thoại: <span class="label">{{ $order->billing_phone }}</span></div>
+                <div class="label-bold">Địa chỉ: <span class="label">{{ $order->billing_address }}</span></div>
                 <div class="label-bold">Địa chỉ email: <span class="label">{{ $order->billing_email }}</span></div>
-                <div class="label-bold">Mã sản phẩm: <span class="label">{{ $order->product_id }}</span></div>
-                <div class="label-bold">Tên sản phẩm: <span class="label">{{ $order->name }}</span></div>
-                <div class="label-bold">Số lượng: <span class="label">{{ $order->quantity }}</span></div>
-                <div class="label-bold">Đơn giá: <span class="label">{{ $order->price }}</span></div>
-                <div class="label-bold">Giảm giá: <span class="label">{{ $order->billing_discount }}</span></div>
-                <div class="label-bold">Tổng giá: <span class="label">{{ $order->billing_total }}</span></div>
+                <div class="label-bold">Thành phố: <span class="label">{{ $order->billing_city }}</span></div>
+                <div class="label-bold">Mã giảm giá: <span class="label">{{ $order->billing_discount_code }}</span></div>
+
+            </div>
+
+            <div style="margin-top: 50px">
+				<table class="table">
+					<thead class="thead-dark">
+					  <tr >
+						<th scope="col">Mã SP</th>
+						<th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Thành tiền</th>
+					  </tr>
+					</thead>
+					<tbody>
+                        @foreach ($products as $product)
+                            <tr style="text-align: center;">
+                                <td>{{$product->id}}</td>
+                                <td>{{$product->name}}</td>
+                                <td>{{$product->order_quantity}}</td>
+                                <td>{{presentPrice($product->price)}}</td>
+                                <td>{{presentPrice($product->price * $product->order_quantity)}}</td>
+                            </tr>
+                            
+                        @endforeach
+                      
+					</tbody>
+                </table>
+            </div>
+            <div style="font-size: 32px; text-align: end;">
+                <div class="label-bold" >Giảm giá: <span style="color: #224dea">{{presentPrice($order->billing_discount)}}</span></div>
+                <div class="label-bold">Tổng giá: <span style="color: #224dea">{{presentPrice($order->billing_total)}}</span></div>
             </div>
             <div class="spacer"></div>
         </div>
