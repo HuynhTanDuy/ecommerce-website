@@ -1573,15 +1573,18 @@ h1.checkout-heading {
   margin-right: 24px;
 }
 
-.register-shop-section .add-product-section label {
+.register-shop-section label,
+.add-product-section label {
   display: block;
 }
 
-.register-shop-section .add-product-section .form-control {
+.register-shop-section .form-control,
+.add-product-section .form-control {
   margin-bottom: 30px;
 }
 
-.register-shop-section .add-product-section input {
+.register-shop-section input,
+.add-product-section input {
   border: 1px solid #919191;
   padding: 16px 10px;
   border-radius: 5px;
@@ -1589,11 +1592,13 @@ h1.checkout-heading {
   font-size: 14px;
 }
 
-.register-shop-section .add-product-section input.radio-button {
+.register-shop-section input.radio-button,
+.add-product-section input.radio-button {
   width: auto !important;
 }
 
-.register-shop-section .add-product-section textarea {
+.register-shop-section textarea,
+.add-product-section textarea {
   border: 1px solid #919191;
   padding: 16px 10px;
   border-radius: 5px;
@@ -1601,18 +1606,21 @@ h1.checkout-heading {
   font-size: 14px;
 }
 
-.register-shop-section .add-product-section .register-shop-button {
+.register-shop-section .register-shop-button,
+.add-product-section .register-shop-button {
   background: #212121;
   color: #e9e9e9;
   border-radius: 5px;
   padding: 12px 50px;
 }
 
-.register-shop-section .add-product-section .register-shop-button:hover {
+.register-shop-section .register-shop-button:hover,
+.add-product-section .register-shop-button:hover {
   background: #3b3b3b;
 }
 
-.register-shop-section .add-product-section .register-shop-button:disabled {
+.register-shop-section .register-shop-button:disabled,
+.add-product-section .register-shop-button:disabled {
   cursor: not-allowed;
   background: whitesmoke;
   color: rgba(0, 0, 0, 0.25);
@@ -1622,7 +1630,8 @@ h1.checkout-heading {
   box-shadow: none;
 }
 
-.register-shop-section .add-product-section select {
+.register-shop-section select,
+.add-product-section select {
   border: 1px solid #919191;
   padding: 16px 10px;
   border-radius: 5px;

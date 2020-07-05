@@ -19,7 +19,7 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-
+        
         @yield('extra-css')
         <style>
 .dropdown {
