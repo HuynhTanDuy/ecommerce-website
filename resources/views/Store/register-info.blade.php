@@ -40,7 +40,7 @@
 			</div> <!-- end sidebar -->
 			<div class="register-info-section">
             <div class="products-header">
-                <h1 class="stylish-heading"> Thông tin cửa hàng</h1>
+                <h1 class="stylish-heading"> Thông tin đăng kí</h1>
             </div>
             <div>
 				<div class="label-bold">Họ và tên chủ cửa hàng: <span class="label">{{ $user->name }}</span></div>

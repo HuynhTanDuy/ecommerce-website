@@ -129,20 +129,28 @@
 			box-shadow: none;
         }
 	}
-	.add-shop-button {
+	.add-shop-button, .done-shop-button {
 		border-color: #a91212;
-		padding: 10px 32px !important;
-		background-color: #b73131;
+		padding: 10px 12px !important;
+		background-color: #119A2D;
         color: $white;
         border-radius: 5px;
         padding: 12px 50px;
         &:hover {
             background-color: #c54141 !important;
-		}
+    }
   }
-
- 
-
+    .detail-shop-button {
+      border-color: #a91212;
+      padding: 10px 12px !important;
+      background-color: #35B5CD;
+      color: $white;
+      border-radius: 5px;
+      padding: 12px 50px;
+        &:hover {
+            background-color: #c54141 !important;
+      }
+    }
 }
 .products-section {
   display: grid;

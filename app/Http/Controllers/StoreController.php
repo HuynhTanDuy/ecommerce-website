@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Store;
 use App\Product;
+use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class StoreController extends Controller
 {
@@ -116,5 +119,47 @@ class StoreController extends Controller
         $product->delete();
         return redirect()->route('store.my-store')->with('success_message', 'Xóa sản phẩm sản phẩm thành công');
 
+	}
+	
+	public function orderList() {
+		$store = Store::where('id_owner', auth()->user()->id)->first();
+		$order=DB::select('SELECT DISTINCT orders.* FROM orders JOIN order_product ON orders.id = order_product.order_id 
+        JOIN products ON order_product.product_id = products.id WHERE products.id_store = ? AND orders.shipped = ?', [$store->id, 0]);
+		return view('Store.order-list')->with([
+			'order' => $order
+		]);
     }
+
+    public function orderDetail($order_id) {
+		$store = Store::where('id_owner', auth()->user()->id)->first();
+		$order=DB::select('SELECT * FROM orders JOIN order_product ON orders.id = order_product.order_id 
+        JOIN products ON order_product.product_id = products.id
+        WHERE order_product.order_id = ?', [$order_id]);
+        $products = DB::select('SELECT products.*,order_product.order_quantity FROM products join order_product 
+        on order_product.product_id=products.id where order_product.order_id=?', [$order_id]);
+        return view('Store.order-detail')->with([
+            'order'=> $order[0],
+            'products' => $products
+        ]);
+
+    }
+
+    public function orderFinish($order_id) {
+        $order = Order::where('id', $order_id)->first();
+        $order->shipped = 1;
+        $order->save();
+        return redirect()->route('order.list')->with('success_message', 'Hoàn thành đơn hàng');
+    
+
+    }
+
+    public function orderFinished() {
+		$store = Store::where('id_owner', auth()->user()->id)->first();
+		$order=DB::select('SELECT * FROM orders JOIN order_product ON orders.id = order_product.order_id 
+        JOIN products ON order_product.product_id = products.id WHERE products.id_store = ? AND orders.shipped = ?', [$store->id, 1]);
+		return view('Store.order-finished')->with([
+			'order' => $order
+		]);
+    }
+
 }

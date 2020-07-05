@@ -75,7 +75,7 @@
 							</div>
 							<div class="form-control">
                                 <div class="label">Hình ảnh</div>
-                                <img style ="width: 30vw" src="http://localhost:8000/img/products/{{ $product->image}}">
+                                <img style ="width: 30vw; height: 40vh;" src="http://localhost:8000/img/products/{{ $product->image}}">
 
 							</div>
 							<div class="form-control">

@@ -13,7 +13,7 @@
 		<ul class="menu-store">
 			<li><a href="{{ route('store.my-store')}}">Thông tin cửa hàng</a></li>
 			<li><a href="{{ route('store.my-store')}}">Quản lý sản phẩm</a></li>
-			<li><a>Quản lý order</a></li>
+			<li><a href="{{ route('order.list')}}">Quản lý order</a></li>
 			</ul>
   		</div>
 	</div>
