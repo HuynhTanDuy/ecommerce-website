@@ -36,6 +36,9 @@
 			<div class="register-info-section">
             <div class="products-header">
                 <h1 class="stylish-heading">Quản lí đơn hàng</h1>
+            </div>
+            <div style="padding-bottom: 30px;">
+				<a id="addBtn" class="add-shop-button" href="{{ route('order.finished') }}">Lịch sử đơn hàng đã giao</a>
 			</div>
             <div>
 				<table class="table">
@@ -74,7 +77,7 @@
 							@method('post')
 							@csrf
 							<a id="register" type="submit" class="delete-shop-button" 
-                        href = "#">Hủy</a>
+                        href = "{{ route('order.cancel', $od->id) }}">Hủy</a>
                         </form>
                         </td>
                     </tr>

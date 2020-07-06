@@ -43,7 +43,7 @@
 					<h1 class="stylish-heading">Thêm sản phẩm mới</h1>
 				</div>
 				<div class="add-product-section">
-					<form action="{{ route('store.update-product-action', $product->id) }}" method="POST">
+					<form action="{{ route('store.update-product-action', $product->id) }}" method="POST" enctype="multipart/form-data">
 							@method('post')
 							@csrf
 							<div class="form-control">
@@ -73,16 +73,19 @@
 								<input id="name_store" type="number" name="quantity" value="{{ $product->quantity}}"
 									required>
 							</div>
-							<div class="form-control">
+							<div class="form-control" >
                                 <div class="label">Hình ảnh</div>
                                 <img style ="width: 30vw; height: 40vh;" src="http://localhost:8000/img/products/{{ $product->image}}">
-
+								<input required type="file" name="image" accept="image/*">
 							</div>
 							<div class="form-control">
                                 <div class="label">Danh sách ảnh chi tiết sản phẩm</div>
                                 @foreach( $images as $img)
                                     <img style ="width: 10vw; margin-right:40px; height:20vh" src = "http://localhost:8000/img/products/{{$img}}">
 								@endforeach
+								<div>
+									<input required type="file" name="images[]" multiple accept="image/*">
+								</div>	
 							</div>
 							<button id="register" type="submit" class="add-product-button">Cập nhật</button>
 					</form>

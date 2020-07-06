@@ -41,6 +41,18 @@
   z-index: 1;
   
 }
+
+.dropdown-content:before {
+
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 148px;
+  border-bottom: 10px solid #535353;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+
+}
 .dropdown-content a {
     color: black;
 }
