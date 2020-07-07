@@ -61,10 +61,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-store/delete-product/{id}', 'StoreController@deleteProduct')->name('store.delete-product');
 
     Route::get('/my-store/order-list', 'StoreController@orderList')->name('order.list');
-    Route::get('/my-store/order-finished', 'StoreController@orderFinished')->name('order.finish');
+    Route::get('/my-store/order-finished', 'StoreController@orderFinished')->name('order.finished');
 
     Route::get('/my-store/order-detail/{order_id}', 'StoreController@orderDetail')->name('order.detail');
     Route::get('/my-store/order-finish/{order_id}', 'StoreController@orderFinish')->name('order.finish');
+    Route::get('my-store/order-cancel/{order_id}', 'StoreController@orderCancel')->name('order.cancel');
 });
 
 Route::get('/test','OrdersController@test');

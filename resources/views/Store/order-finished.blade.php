@@ -32,10 +32,10 @@
                 </ul>
             </div>
         @endif
-        <div class="store-section container" style="max-width:1600px">
+        <div class="store-section container" style="max-width:1200px">
 			<div class="register-info-section">
             <div class="products-header">
-                <h1 class="stylish-heading">Quản lí đơn hàng</h1>
+                <h1 class="stylish-heading">Đơn hàng đã hoàn thành</h1>
 			</div>
             <div>
 				<table class="table">
@@ -46,10 +46,6 @@
 						<th scope="col">Địa chỉ</th>
 						<th scope="col">Email</th>
 						<th scope="col">Số điện thoại</th>
-                        <th scope="col">Đơn giá</th>
-						<th scope="col">Số lượng</th>
-						<th scope="col">Giảm giá</th>
-                        <th scope="col">Tổng giá</th>
                         <th scope="col">Chi tiết</th>
 					  </tr>
 					</thead>
@@ -61,10 +57,6 @@
                         <td>{{ $od->billing_address}}</td>
                         <td>{{ $od->billing_email}}</td>
                         <td>{{ $od->billing_phone}}</td>
-                        <td>{{ $od->price}}</td>
-                        <td>{{ $od->quantity}}</td>
-                        <td>{{ $od->billing_discount}}</td>
-                        <td>{{ $od->billing_total}}</td>
                         <td>
 							<a id="register" type="submit" class="detail-shop-button" 
 						href = "{{ route('order.detail', $od->order_id) }}">Chi tiết</a>

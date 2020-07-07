@@ -6,6 +6,7 @@ use App\Store;
 use App\Product;
 use App\Order;
 use Illuminate\Http\Request;
+use App\OrderProduct;
 use Illuminate\Support\Facades\DB;
 
 
@@ -97,17 +98,38 @@ class StoreController extends Controller
             'details' => 'string|min:6',
             'price' => 'required|max:255',
             'description' => 'required|string|max:255',
-            'quantity' => 'required|max:255',    
-            'image' => 'string|max:255',
-            'images' => 'string|max:255'
+            'quantity' => 'required|max:255'
         ]);
+        if($request->hasFile('image')) {
+            $file=$request->file('image');
+            $name=$file->getClientOriginalName();
+            $avatar=str_random(4)."_". $name;
+            $duoi=$file->getClientOriginalExtension();
+            while(file_exists("img/products/".$avatar))
+            {
+                $avatarHinh=str_random(4)."_".$name;
+            }
+            $file->move("img/products/",$avatar);
+            $product->image=$avatar;
+        }
+        else {
+            $product->image="";
+        }
+        $array_images = array();
+        if($request->hasFile('images')) {
+            $images = $request->file('images');
+            foreach($images as $image){
+                $name=$image->getClientOriginalName();
+                $image->move('img/products/',$name);
+                $array_images[] = $name;
+            }
+        }
+        $product->images = $array_images;
         $product->name = $request->name;
         $product->price = $request->price;
         $product->details = $request->details;
         $product->description = $request->description;
         $product->quantity = $request->quantity;
-        $product->image = $request->image;
-        $product->images = $request->images;
         $product->slug = $request->slug;
         $product->save();
         return redirect()->route('store.my-store')->with('success_message', 'Cập nhật sản phẩm thành công');
@@ -162,4 +184,13 @@ class StoreController extends Controller
 		]);
     }
 
+    public function orderCancel($order_id) {
+        $order= Order::where('id', $order_id)->first();
+        $order_products = OrderProduct::where('order_id', $order->id)->get();
+
+        $order_products->each->delete();
+        $order->delete();
+        return redirect()->route('order.list')->with('success_message', 'Hủy đơn hàng thành công');
+
+    }
 }
