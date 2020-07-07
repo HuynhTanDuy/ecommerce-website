@@ -32,6 +32,9 @@ Route::get('/thankyou', 'ConfirmationController@index')->name('confirmation.inde
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+    Route::get('/accept-store/{id}','Voyager\StoreController@acceptStore')->name('stores.accept');
+    Route::get('/cancel-store/{id}','Voyager\StoreController@cancelStore')->name('stores.cancel');
+
 });
 
 Auth::routes();
