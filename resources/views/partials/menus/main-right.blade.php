@@ -12,7 +12,7 @@
 		<span style="color: #fdfdfd;">Cửa hàng  <i class="fa fa-caret-down"></i></span>
 		<div style="margin-left: -45px;" class="dropdown-content">
 		<ul class="menu-store">
-			<li><a href="{{ route('store.my-store')}}">Thông tin cửa hàng</a></li>
+			<li><a href="{{ route('store.information')}}">Thông tin cửa hàng</a></li>
 			<li><a href="{{ route('store.my-store')}}">Quản lý sản phẩm</a></li>
 			<li><a href="{{ route('order.list')}}">Quản lý order</a></li>
 			</ul>

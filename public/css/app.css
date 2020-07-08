@@ -1764,3 +1764,10 @@ h1.checkout-heading {
   color: #919191;
 }
 
+.shop-detail-btn {
+  background: #a1d1f5eb;
+  border: 1px solid #2e5dc7;
+  padding: 3px;
+  font-size: 20px;
+  margin-left: 10px;
+}

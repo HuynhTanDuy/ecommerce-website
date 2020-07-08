@@ -199,4 +199,22 @@ class StoreController extends Controller
         return redirect()->route('order.list')->with('success_message', 'Hủy đơn hàng thành công');
 
     }
+
+    public function storeInformation() {
+
+        $store = Store::where('id_owner', auth()->user()->id)->first();
+        $category = Category::where('id', $store->category)->first();
+        return view('Store.store-information')->with([
+            'store' => $store,
+            'category' => $category
+        ]);
+    }
+
+    public function UpdateStoreInformation(Request $request, $id) {
+        $store = Store::where('id', $id)->first();
+        $store->name = $request->name_store;
+        $store->location = $request->location;
+        $store->save();
+        return redirect()->route('store.information')->with('success_message', 'Cập nhật thành công');
+    }
 }

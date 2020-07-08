@@ -72,6 +72,16 @@
                 </form>
             @endif
         </div>
+        <div style="padding: 20px; border: 1px solid black; font-size: 23px">
+            <div>
+                <span>Cửa hàng: </span> <span style="color: #199eff; font-size: 29px">{{$store->name}}</span>
+                <a class="shop-detail-btn" href="{{ route('shop.detail', $product->id_store)}}" >Xem Shop </a>
+            </div>
+            <div style="font-size: 18px">
+                <span>Tổng sản phẩm: {{$product_count}}</span>
+                <span style="margin-left: 20px">Đánh giá: 5.0*</span>
+            </div>
+        </div>
     </div> <!-- end product-section -->
 
     @include('partials.might-like')

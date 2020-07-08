@@ -4,6 +4,7 @@ Route::get('/', 'ShopController@index')->name('landing-page');
 
 Route::get('/shop', 'ShopController@index')->name('shop.index');
 Route::get('/shop/{product}', 'ShopController@show')->name('shop.show');
+Route::get('/shop-detail/{id}', 'ShopController@shopDetail')->name('shop.detail');
 
 Route::get('/cart', 'CartController@index')->name('cart.index');
 Route::post('/cart/{product}', 'CartController@store')->name('cart.store');
@@ -57,6 +58,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/register-info', 'RegisterStoreController@registerInfo')->name('store.register-info');
 
     Route::get('/my-store', 'StoreController@index')->name('store.my-store');
+    Route::get('/my-store/information', 'StoreController@storeInformation')->name('store.information');
+    Route::post('/my-store/information/{id}', 'StoreController@UpdateStoreInformation')->name('store.information-update');
+
     Route::get('/my-store/add-product', 'StoreController@addProductIndex')->name('store.add-product');
     Route::post('/my-store/add-product', 'StoreController@addProduct')->name('store.add-product-action');
     Route::get('/my-store/update-product/{id}', 'StoreController@updateProductIndex')->name('store.update-product');

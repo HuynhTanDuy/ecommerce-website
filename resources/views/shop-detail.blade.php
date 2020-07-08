@@ -32,13 +32,11 @@
         @endif
     </div>
    
-    <div class="products-section container">
+    <div style="grid-template-columns: 1fr;" class="products-section container">
         <div class="sidebar">
-            <h3>Thể loại</h3>
+            <h3></h3>
             <ul>
-                @foreach ($categories as $category)
-                    <li class="{{ setActiveCategory($category->slug) }}"><a href="{{ route('shop.index', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
-                @endforeach
+               
             </ul>
         </div> <!-- end sidebar -->
         <div>
@@ -127,17 +125,16 @@
                 </div>
             </div>
             <div class="products-header">
-                <h1 class="stylish-heading">{{ $categoryName }}</h1>
+                <h1 class="stylish-heading">{{ $store->name }}</h1>
                 <div>
                     <strong>Giá: </strong>
-                    <a href="{{ route('shop.index', ['category'=> request()->category, 'sort' => 'low_high']) }}">Thấp đến cao</a> |
-                    <a href="{{ route('shop.index', ['category'=> request()->category, 'sort' => 'high_low']) }}">Cao đến thấp</a>
+                    <a href="{{ route('shop.detail', [$store->id, 'sort' => 'low_high']) }}">Thấp đến cao</a> |
+                    <a href="{{ route('shop.detail', [$store->id, 'sort' => 'high_low']) }}">Cao đến thấp</a>
 
                 </div>
             </div>
 
             <div class="products text-center">
-            
                 @forelse ($products as $product)
                     <div class="product">
                         <a href="{{ route('shop.show', $product->slug) }}"><img style="width:200px; height: 200px"src="{{ productImage($product->image) }}" alt="product"></a>

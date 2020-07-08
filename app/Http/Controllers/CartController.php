@@ -115,12 +115,12 @@ class CartController extends Controller
         }
 
         if ($request->quantity > $request->productQuantity) {
-            session()->flash('errors', collect(['We currently do not have enough items in stock.']));
+            session()->flash('errors', collect(['Cửa hàng tạm hết sản phẩm này.']));
             return response()->json(['success' => false], 400);
         }
 
         Cart::update($id, $request->quantity);
-        session()->flash('success_message', 'Quantity was updated successfully!');
+        session()->flash('success_message', 'Số lượng được cập nhật thành công!');
         return response()->json(['success' => true]);
     }
 
@@ -135,12 +135,14 @@ class CartController extends Controller
         // Cart::remove($id);
 
         // return back()->with('success_message', 'Item has been removed!');
+
         if (Auth::user()) {
             $user_id=Auth::user()->id;
         }
         else $user_id=0;
         Cart::removeItem($id, $user_id);
-        return back()->with('success_message', 'Sản phẩm đã bị xóa!');
+        return back()->with('success_message', 'Sản phẩm đã bị xóa khỏi giỏ hàng!');
+
     }
 
     /**
@@ -176,7 +178,8 @@ class CartController extends Controller
 
         Cart::updateStatus($id, $user_id, $SAVE_FOR_LATER);
 
-        return redirect()->route('cart.index')->with('success_message', 'Sản phẩm đã được thêm vào danh sách để dành mua sau!');
+        return redirect()->route('cart.index')->with('success_message', 'Sản phẩm được lưu cho lần mua sau!');
+
     }
 
     public function switchToCart($id)
@@ -190,7 +193,9 @@ class CartController extends Controller
 
         Cart::updateStatus($id, $user_id, $MOVE_TO_CART);
 
+
         return redirect()->route('cart.index')->with('success_message', 'Sản phẩm đã được thêm vào giỏ hàng!');
+
     }
 
     public function updateQuantity(Request $request)
