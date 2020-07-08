@@ -20,11 +20,11 @@
 	</div>
 	</li>
     @else
-    <li>
+    <li style="width: 120px;">
         <a style="color: #fdfdfd;" href="{{ route('store.index') }}">Đăng kí mở cửa hàng</a>
     </li>
     @endif
-    <li>
+    <li style="width: 110px;">
         <a style="color: #fdfdfd;" href="{{ route('orders.index') }}">
             Lịch sử đặt hàng
         </a>
