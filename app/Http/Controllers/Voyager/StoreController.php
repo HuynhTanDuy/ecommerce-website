@@ -6,6 +6,7 @@ use App\Product;
 use App\Category;
 use App\Store;
 use App\CategoryProduct;
+use App\User;
 use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\DB;
@@ -133,6 +134,9 @@ class StoreController extends VoyagerBaseController
    public function acceptStore($id) {
         $store = Store::where('id', $id)->first();
         $store->status = 1;
+        $owner = User::where('id',$store->id_owner)->first();
+        $owner->role_id=4;
+        $owner->save();
         try {
             Mail::send(new StoreAccepted($store));
         } catch(Exception $e) {

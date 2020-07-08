@@ -99,8 +99,12 @@ class CheckoutController extends Controller
             // decrease the quantities of all the products in the cart
             $this->decreaseQuantities();
 
+            if (Auth::user()) {
+                $user_id=Auth::user()->id;
+            }
+            else $user_id=0;
             // Cart::instance('default')->destroy();
-            Cart::clearAfterOrder(Auth::user()->id);
+            Cart::clearAfterOrder($user_id);
             session()->forget('coupon');
 
             return redirect()->route('confirmation.index')->with('success_message', 'Thank you! Your payment has been successfully accepted!');
@@ -190,8 +194,12 @@ class CheckoutController extends Controller
             'error' => $error,
         ]);
 
+        if (Auth::user()) {
+            $user_id=Auth::user()->id;
+        }
+        else $user_id=0;
         // Insert into order_product table
-        $products = Product::getListProduct(Auth::user()->id);
+        $products = Product::getListProduct($user_id);
         foreach ($products as $item) {
             OrderProduct::create([
                 'order_id' => $order->id,
@@ -233,7 +241,11 @@ class CheckoutController extends Controller
 
     protected function decreaseQuantities()
     {   
-        $products = Product::getListProduct(Auth::user()->id);
+        if (Auth::user()) {
+            $user_id=Auth::user()->id;
+        }
+        else $user_id=0;
+        $products = Product::getListProduct($user_id);
         foreach ($products as $item) {
             $product = Product::find($item->id);
             $sub =  $product->quantity - $item->quantity_cart;
