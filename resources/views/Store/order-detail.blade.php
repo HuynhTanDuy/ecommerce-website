@@ -74,8 +74,8 @@
                 </table>
             </div>
             <div style="font-size: 32px; text-align: end;">
-                <div class="label-bold" >Giảm giá: <span style="color: #224dea">{{presentPrice($order->billing_discount)}}</span></div>
-                <div class="label-bold">Tổng giá: <span style="color: #224dea">{{presentPrice($order->billing_total)}}</span></div>
+                {{-- <div class="label-bold" >Giảm giá: <span style="color: #224dea">{{presentPrice($order->billing_discount)}}</span></div> --}}
+                <div class="label-bold">Tổng giá: <span style="color: #224dea">{{presentPrice($total)}}</span></div>
             </div>
             <div class="spacer"></div>
         </div>

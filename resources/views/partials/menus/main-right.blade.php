@@ -6,6 +6,7 @@
     <li>
         <a style="color: #fdfdfd;" href="{{ route('users.edit') }}">Tài khoản</a>
     </li>
+    @if (Auth::user()->role_id==4)
 	<li style="cursor: default">
     <div class="dropdown">
 		<span style="color: #fdfdfd;">Cửa hàng  <i class="fa fa-caret-down"></i></span>
@@ -18,6 +19,11 @@
   		</div>
 	</div>
 	</li>
+    @else
+    <li>
+        <a style="color: #fdfdfd;" href="{{ route('store.index') }}">Đăng kí mở cửa hàng</a>
+    </li>
+    @endif
     <li>
         <a style="color: #fdfdfd;" href="{{ route('logout') }}"
             onclick="event.preventDefault();

@@ -60,9 +60,9 @@
 				  ">
 						<th scope="row">{{ $product->id}}</th>
 						<td>{{ $product->name }}</td>
-						<td>{{ $product->price }}</td>
+						<td> {{ presentPrice($product->price) }}</td>
 						<td>{{ $product->quantity }}</td>
-						<td><img src="img/products/{{$product->image}}"></td>
+						<td><img src="{{productImage($product->image)}}"></td>
 			
 						<td>...</td>
 						<td>...</td>

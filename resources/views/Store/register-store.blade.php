@@ -55,7 +55,7 @@
 					<div class="form-control">
 							<div class="label">Số điện thoại chủ cửa hàng</div>
 							<input id="phone_number" type="number" name="phone_number" 
-								value="147852369" disabled>
+								value="0332725110" >
 					</div>
 					<div class="form-control">
 							<div class="label">Địa chỉ email của chủ cửa hàng</div>

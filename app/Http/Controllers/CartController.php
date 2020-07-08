@@ -136,8 +136,13 @@ class CartController extends Controller
 
         // return back()->with('success_message', 'Item has been removed!');
 
-        Cart::removeItem($id, Auth::user()->id);
-        return back()->with('success_message', 'Sản phẩm đã được xoá khỏi giỏ hàng!');
+        if (Auth::user()) {
+            $user_id=Auth::user()->id;
+        }
+        else $user_id=0;
+        Cart::removeItem($id, $user_id);
+        return back()->with('success_message', 'Sản phẩm đã bị xóa khỏi giỏ hàng!');
+
     }
 
     /**
@@ -163,20 +168,34 @@ class CartController extends Controller
         // Cart::instance('saveForLater')->add($item->id, $item->name, 1, $item->price)
         //     ->associate('App\Product');
 
+        if (Auth::user()) {
+            $user_id=Auth::user()->id;
+        }
+        else $user_id=0;
+
+
         $SAVE_FOR_LATER=0;
 
-        Cart::updateStatus($id, Auth::user()->id, $SAVE_FOR_LATER);
+        Cart::updateStatus($id, $user_id, $SAVE_FOR_LATER);
 
         return redirect()->route('cart.index')->with('success_message', 'Sản phẩm được lưu cho lần mua sau!');
+
     }
 
     public function switchToCart($id)
     {   
         $MOVE_TO_CART=1;
 
-        Cart::updateStatus($id, Auth::user()->id, $MOVE_TO_CART);
+        if (Auth::user()) {
+            $user_id=Auth::user()->id;
+        }
+        else $user_id=0;
 
-        return redirect()->route('cart.index')->with('success_message', 'Sản phẩm đã được xoá khỏi giỏ hàng!');
+        Cart::updateStatus($id, $user_id, $MOVE_TO_CART);
+
+
+        return redirect()->route('cart.index')->with('success_message', 'Sản phẩm đã được thêm vào giỏ hàng!');
+
     }
 
     public function updateQuantity(Request $request)

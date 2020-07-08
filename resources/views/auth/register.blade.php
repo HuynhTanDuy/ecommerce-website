@@ -19,7 +19,7 @@
                 </ul>
             </div>
             @endif
-            <h2>Create Account</h2>
+            <h2>Tạo tài khoản</h2>
             <div class="spacer"></div>
 
             <form method="POST" action="{{ route('register') }}">
@@ -35,10 +35,10 @@
                     required>
 
                 <div class="login-container">
-                    <button type="submit" class="auth-button">Create Account</button>
+                    <button type="submit" class="auth-button">Tạo tài khoản</button>
                     <div class="already-have-container">
-                        <p><strong>Already have an account?</strong></p>
-                        <a href="{{ route('login') }}">Login</a>
+                        <p><strong>Đã có tài khoản?</strong></p>
+                        <a href="{{ route('login') }}">Đăng nhập</a>
                     </div>
                 </div>
 
@@ -46,15 +46,15 @@
         </div>
 
         <div class="auth-right">
-            <h2>New Customer</h2>
+            <h2>Khách hàng mới</h2>
             <div class="spacer"></div>
-            <p><strong>Save time now.</strong></p>
-            <p>Creating an account will allow you to checkout faster in the future, have easy access to order history and customize your experience to suit your preferences.</p>
+            <p><strong>Tiết kiệm thời gian</strong></p>
+            <p>Tạo tài khoản giúp bạn thanh toán nhanh hơn trong tương lại, dễ dàng theo dõi tình trạng và lịch sử mua hàng và cải thiện trải nghiệm sử dụng của chính bạn.</p>
 
             &nbsp;
             <div class="spacer"></div>
-            <p><strong>Loyalty Program</strong></p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt debitis, amet magnam accusamus nisi distinctio eveniet ullam. Facere, cumque architecto.</p>
+            <p><strong>Nhiều ưu đãi hấp dẫn</strong></p>
+            <p>Tận hưởng nhiều ưu đãi, sự kiện trên hệ thống của chúng tôi</p>
         </div>
     </div> <!-- end auth-pages -->
 </div>

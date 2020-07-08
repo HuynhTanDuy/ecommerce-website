@@ -6,6 +6,7 @@ use App\Product;
 use App\Category;
 use App\Store;
 use App\CategoryProduct;
+use App\User;
 use Illuminate\Http\Request;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,8 @@ use TCG\Voyager\Events\BreadImagesDeleted;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StoreAccepted;
 
 class StoreController extends VoyagerBaseController
 {
@@ -131,8 +134,17 @@ class StoreController extends VoyagerBaseController
    public function acceptStore($id) {
         $store = Store::where('id', $id)->first();
         $store->status = 1;
+        $owner = User::where('id',$store->id_owner)->first();
+        $owner->role_id=4;
+        $owner->save();
+        try {
+            Mail::send(new StoreAccepted($store));
+        } catch(Exception $e) {
+
+        }
         $store->save();
-        return redirect()->route('voyager.store.index')->with("success_message","Duyệt cửa hàng thành công");
+        
+        return redirect()->route('voyager.store.index')->with("success_message","Duyệt cửa hàng thành công. Email xác nhận đã được gửi đến chủ cửa hàng");
     }
     public function cancelStore($id) {
         $store = Store::where('id', $id)->first();

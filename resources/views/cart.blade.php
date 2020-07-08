@@ -140,13 +140,13 @@
 
             {{-- @if (Cart::instance('saveForLater')->count() > 0) --}}
             @if (count($saveForLater) > 0)
-            <h2> Saved For Later</h2>
+            <h2> Để dành mua sau</h2>
 
             <div class="saved-for-later cart-table">
                 @foreach ($saveForLater as $item)
                 <div class="cart-table-row">
                     <div class="cart-table-row-left">
-                        <a href="{{ route('shop.show', $item->slug) }}"><img src="{{ asset('img/products/'.$item->slug.'.jpg') }}" alt="item" class="cart-table-img"></a>
+                        <a href="{{ route('shop.show', $item->slug) }}"><img src="{{ productImage($item->image) }}" alt="item" class="cart-table-img"></a>
                         <div class="cart-item-details">
                             <div class="cart-table-item"><a href="{{ route('shop.show', $item->slug) }}">{{ $item->name }}</a></div>
                             <div class="cart-table-description">{{ $item->details }}</div>
@@ -164,13 +164,13 @@
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
-                                <button type="submit" class="cart-options">Remove</button>
+                                <button type="submit" class="cart-options">Xóa</button>
                             </form>
 
                             <form action="{{ route('saveForLater.switchToCart', $item->id) }}" method="POST">
                                 {{ csrf_field() }}
 
-                                <button type="submit" class="cart-options">Move to Cart</button>
+                                <button type="submit" class="cart-options">Thêm vào giỏ hàng</button>
                             </form>
                         </div>
 
