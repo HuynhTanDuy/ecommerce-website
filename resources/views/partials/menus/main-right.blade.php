@@ -25,6 +25,11 @@
     </li>
     @endif
     <li>
+        <a style="color: #fdfdfd;" href="{{ route('orders.index') }}">
+            Lịch sử đặt hàng
+        </a>
+    </li>
+    <li>
         <a style="color: #fdfdfd;" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                      document.getElementById('logout-form').submit();">

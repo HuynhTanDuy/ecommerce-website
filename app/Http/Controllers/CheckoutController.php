@@ -101,6 +101,7 @@ class CheckoutController extends Controller
             }
             
 
+
             // decrease the quantities of all the products in the cart
             $this->decreaseQuantities();
 
@@ -158,7 +159,7 @@ class CheckoutController extends Controller
                 null
             );
 
-            //Mail::send(new OrderPlaced($order));
+            Mail::send(new OrderPlaced($order));
 
             // decrease the quantities of all the products in the cart
             $this->decreaseQuantities();

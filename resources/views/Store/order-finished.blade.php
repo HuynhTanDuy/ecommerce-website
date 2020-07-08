@@ -46,7 +46,7 @@
 						<th scope="col">Địa chỉ</th>
 						<th scope="col">Email</th>
 						<th scope="col">Số điện thoại</th>
-                        <th scope="col">Chi tiết</th>
+                        <th style="width: 120px;"scope="col">Chi tiết</th>
 					  </tr>
 					</thead>
 					<tbody>

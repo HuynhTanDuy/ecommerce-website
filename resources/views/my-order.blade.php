@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'My Order')
+@section('title', 'My Profile')
 
 @section('extra-css')
     <link rel="stylesheet" href="{{ asset('css/algolia.css') }}">
@@ -9,9 +9,11 @@
 @section('content')
 
     @component('components.breadcrumbs')
-        <a href="/">Home</a>
+        <a href="/">Trang chủ</a>
         <i class="fa fa-chevron-right breadcrumb-separator"></i>
-        <span>My Order</span>
+        <a href="{{route('store.my-store')}}">Cửa hàng</a>
+        <i class="fa fa-chevron-right breadcrumb-separator"></i>
+        <span>Chi tiết đơn hàng</span>
     @endcomponent
 
     <div class="container">
@@ -30,107 +32,54 @@
                 </ul>
             </div>
         @endif
-    </div>
-
-    <div class="products-section my-orders container">
-        <div class="sidebar">
-
-            <ul>
-              <li><a href="{{ route('users.edit') }}">My Profile</a></li>
-              <li class="active"><a href="{{ route('orders.index') }}">My Orders</a></li>
-            </ul>
-        </div> <!-- end sidebar -->
-        <div class="my-profile">
+        <div class="store-section container">
+			<div class="register-info-section">
             <div class="products-header">
-                <h1 class="stylish-heading">Order ID: {{ $order->id }}</h1>
+                <h1 class="stylish-heading">Chi tiết đơn hàng {{ $order->order_id }}</h1>
             </div>
-
             <div>
-                <div class="order-container">
-                    <div class="order-header">
-                        <div class="order-header-items">
-                            <div>
-                                <div class="uppercase font-bold">Order Placed</div>
-                                <div>{{ presentDate($order->created_at) }}</div>
-                            </div>
-                            <div>
-                                <div class="uppercase font-bold">Order ID</div>
-                                <div>{{ $order->id }}</div>
-                            </div><div>
-                                <div class="uppercase font-bold">Total</div>
-                                <div>{{ presentPrice($order->billing_total) }}</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="order-header-items">
-                                <div><a href="#">Invoice</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="order-products">
-                        <table class="table" style="width:50%">
-                            <tbody>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>{{ $order->user->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Address</td>
-                                    <td>{{ $order->billing_address }}</td>
-                                </tr>
-                                <tr>
-                                    <td>City</td>
-                                    <td>{{ $order->billing_city }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Subtotal</td>
-                                    <td>{{ presentPrice($order->billing_subtotal) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tax</td>
-                                    <td>{{ presentPrice($order->billing_tax) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Total</td>
-                                    <td>{{ presentPrice($order->billing_total) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+				<div class="label-bold">Tên người đặt: <span class="label">{{ $order->billing_name }}</span></div>
+                <div class="label-bold">Số điện thoại: <span class="label">{{ $order->billing_phone }}</span></div>
+                <div class="label-bold">Địa chỉ: <span class="label">{{ $order->billing_address }}</span></div>
+                <div class="label-bold">Địa chỉ email: <span class="label">{{ $order->billing_email }}</span></div>
+                <div class="label-bold">Thành phố: <span class="label">{{ $order->billing_city }}</span></div>
+                <div class="label-bold">Mã giảm giá: <span class="label">{{ $order->billing_discount_code }}</span></div>
 
-                    </div>
-                </div> <!-- end order-container -->
-
-                <div class="order-container">
-                    <div class="order-header">
-                        <div class="order-header-items">
-                            <div>
-                                Order Items
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="order-products">
-                        @foreach ($products as $product)
-                            <div class="order-product-item">
-                                <div><img src="{{ asset($product->image) }}" alt="Product Image"></div>
-                                <div>
-                                    <div>
-                                        <a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a>
-                                    </div>
-                                    <div>{{ presentPrice($product->price) }}</div>
-                                    <div>Quantity: {{ $product->pivot->quantity }}</div>
-                                </div>
-                            </div>
-                        @endforeach
-
-                    </div>
-                </div> <!-- end order-container -->
             </div>
 
+            <div style="margin-top: 50px">
+				<table class="table">
+					<thead class="thead-dark">
+					  <tr >
+						<th scope="col">Mã SP</th>
+						<th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Thành tiền</th>
+					  </tr>
+					</thead>
+					<tbody>
+                        @foreach ($products as $product)
+                            <tr style="text-align: center;">
+                                <td>{{$product->id}}</td>
+                                <td>{{$product->name}}</td>
+                                <td>{{$product->order_quantity}}</td>
+                                <td>{{presentPrice($product->price)}}</td>
+                                <td>{{presentPrice($product->price * $product->order_quantity)}}</td>
+                            </tr>
+                            
+                        @endforeach
+                      
+					</tbody>
+                </table>
+            </div>
+            <div style="font-size: 32px; text-align: end;">
+                {{-- <div class="label-bold" >Giảm giá: <span style="color: #224dea">{{presentPrice($order->billing_discount)}}</span></div> --}}
+                <div class="label-bold">Tổng giá: <span style="color: #224dea">{{presentPrice($total)}}</span></div>
+            </div>
             <div class="spacer"></div>
         </div>
     </div>
-
 @endsection
 
 @section('extra-js')

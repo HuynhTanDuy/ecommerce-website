@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'My Orders')
+@section('title', 'Quản lí cửa hàng')
 
 @section('extra-css')
     <link rel="stylesheet" href="{{ asset('css/algolia.css') }}">
@@ -9,12 +9,14 @@
 @section('content')
 
     @component('components.breadcrumbs')
-        <a href="/">Home</a>
+        <a href="/">Trang chủ</a>
         <i class="fa fa-chevron-right breadcrumb-separator"></i>
-        <span>My Orders</span>
+        <a href="{{route('store.my-store')}}">Cửa hàng</a>
+        <i class="fa fa-chevron-right breadcrumb-separator"></i>
+        <span>Lịch sử đặt hàng</span>
     @endcomponent
 
-    <div class="container">
+    <div class="container" style="max-width:1600px">
         @if (session()->has('success_message'))
             <div class="alert alert-success">
                 {{ session()->get('success_message') }}
@@ -30,69 +32,87 @@
                 </ul>
             </div>
         @endif
-    </div>
-
-    <div class="products-section my-orders container">
-        <div class="sidebar">
-
-            <ul>
-              <li><a href="{{ route('users.edit') }}">My Profile</a></li>
-              <li class="active"><a href="{{ route('orders.index') }}">My Orders</a></li>
-            </ul>
-        </div> <!-- end sidebar -->
-        <div class="my-profile">
-            <div class="products-header">
-                <h1 class="stylish-heading">My Orders</h1>
-            </div>
-
-            <div>
-                @foreach ($orders as $order)
-                <div class="order-container">
-                    <div class="order-header">
-                        <div class="order-header-items">
-                            <div>
-                                <div class="uppercase font-bold">Order Placed</div>
-                                <div>{{ presentDate($order->created_at) }}</div>
-                            </div>
-                            <div>
-                                <div class="uppercase font-bold">Order ID</div>
-                                <div>{{ $order->id }}</div>
-                            </div><div>
-                                <div class="uppercase font-bold">Total</div>
-                                <div>{{ presentPrice($order->billing_total) }}</div>
-                            </div>
+        <div class="store-section container" style="max-width:1200px">
+			<div class="register-info-section">
+                    <div class="products-header">
+                            <h1 class="stylish-heading">Đơn hàng đang giao</h1>
                         </div>
                         <div>
-                            <div class="order-header-items">
-                                <div><a href="{{ route('orders.show', $order->id) }}">Order Details</a></div>
-                                <div>|</div>
-                                <div><a href="#">Invoice</a></div>
-                            </div>
+                            <table class="table">
+                                <thead class="thead-dark">
+                                  <tr >
+                                    <th scope="col">Mã đơn hàng</th>
+                                    <th scope="col">Địa chỉ giao</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Số điện thoại</th>
+                                    <th scope="col">Mã giảm giá</th>
+                                    <th scope="col">Ngày đặt</th>
+                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col">Chi tiết</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($orders_delivering as $od)  
+                                <tr style="text-align: center;">
+                                    <td>{{ $od->id}}</td>
+                                    <td>{{ $od->billing_address}}</td>
+                                    <td>{{ $od->billing_email}}</td>
+                                    <td>{{ $od->billing_phone}}</td>
+                                    <td>{{ $od->billing_discount_code}}</td>
+                                    <td>{{ $od->created_at}}</td>
+                                    <td>{{ $od->billing_total}}</td>
+                                    <td style="width: 130px;">
+                                        <a id="register" type="submit" class="detail-shop-button" 
+                                    href = "{{ route('orders.show', $od->id) }}">Chi tiết</a>
+                                    </td>
+                                   
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <div class="order-products">
-                        @foreach ($order->products as $product)
-                            <div class="order-product-item">
-                                <div><img src="{{ asset($product->image) }}" alt="Product Image"></div>
-                                <div>
-                                    <div>
-                                        <a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a>
-                                    </div>
-                                    <div>{{ presentPrice($product->price) }}</div>
-                                    <div>Quantity: {{ $product->pivot->quantity }}</div>
-                                </div>
-                            </div>
-                        @endforeach
-
-                    </div>
-                </div> <!-- end order-container -->
-                @endforeach
+            <div class="products-header">
+                <h1 style="margin-top: 60px; margin-bottom: 0;" class="stylish-heading">Lịch sử đặt hàng</h1>
             </div>
-
+            <div>
+				<table class="table">
+					<thead class="thead-dark">
+					  <tr >
+						<th scope="col">Mã đơn hàng</th>
+						<th scope="col">Địa chỉ giao</th>
+						<th scope="col">Email</th>
+						<th scope="col">Số điện thoại</th>
+                        <th scope="col">Mã giảm giá</th>
+                        <th scope="col">Ngày đặt</th>
+                        <th scope="col">Ngày giao</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Chi tiết</th>
+					  </tr>
+					</thead>
+					<tbody>
+                    @foreach($orders_finished as $od)  
+                    <tr style="text-align: center;">
+						<td>{{ $od->id}}</td>
+                        <td>{{ $od->billing_address}}</td>
+                        <td>{{ $od->billing_email}}</td>
+                        <td>{{ $od->billing_phone}}</td>
+                        <td>{{ $od->billing_discount_code}}</td>
+                        <td>{{ $od->created_at}}</td>
+                        <td>{{ $od->updated_at}}</td>
+                        <td>{{ $od->billing_total}}</td>
+                        <td style="width: 130px;">
+							<a id="register" type="submit" class="detail-shop-button" 
+						href = "{{ route('orders.show', $od->id) }}">Chi tiết</a>
+                        </td>
+                       
+                    </tr>
+                    @endforeach
+					</tbody>
+				</table>
+            </div>
             <div class="spacer"></div>
         </div>
     </div>
-
 @endsection
 
 @section('extra-js')

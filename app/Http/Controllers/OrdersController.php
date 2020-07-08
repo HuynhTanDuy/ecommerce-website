@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Cart;
 use App\Product;
 use App\User;
+use App\Store;
 class OrdersController extends Controller
 {
     /**
@@ -20,9 +21,13 @@ class OrdersController extends Controller
     {
         // $orders = auth()->user()->orders; // n + 1 issues
 
-        $orders = auth()->user()->orders()->with('products')->get(); // fix n + 1 issues
+       $orders_finished = Order::where(['user_id' => auth()->user()->id, 'shipped' => 1])->get();
+       $orders_delivering = Order::where(['user_id' => auth()->user()->id, 'shipped' => 0])->get();
 
-        return view('my-orders')->with('orders', $orders);
+       return view('my-orders')->with([
+           'orders_finished'=> $orders_finished,
+           'orders_delivering' => $orders_delivering
+       ]);
     }
 
     /**
@@ -52,17 +57,22 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        if (auth()->id() !== $order->user_id) {
-            return back()->withErrors('You do not have access to this!');
+        $order=DB::select('SELECT * FROM orders JOIN order_product ON orders.id = order_product.order_id 
+        JOIN products ON order_product.product_id = products.id
+        WHERE order_product.order_id = ?', [$id]);
+        $products = DB::select('SELECT products.*,order_product.order_quantity FROM products join order_product 
+        on order_product.product_id=products.id where order_product.order_id=?', [$id]);
+
+        $total=0;
+        foreach ($products as $item) {
+            $total+= ($item->price * $item->order_quantity);
         }
-
-        $products = $order->products;
-
         return view('my-order')->with([
-            'order' => $order,
+            'order'=> $order[0],
             'products' => $products,
+            'total' => $total
         ]);
     }
 
