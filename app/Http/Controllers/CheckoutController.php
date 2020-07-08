@@ -94,7 +94,12 @@ class CheckoutController extends Controller
             // ]);
 
             $order = $this->addToOrdersTables($request, null);
-            //Mail::send(new OrderPlaced($order));
+            try {
+                Mail::send(new OrderPlaced($order));    
+            } catch (Exception $e) {
+                
+            }
+            
 
             // decrease the quantities of all the products in the cart
             $this->decreaseQuantities();

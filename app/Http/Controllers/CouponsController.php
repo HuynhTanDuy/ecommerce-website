@@ -26,7 +26,7 @@ class CouponsController extends Controller
 
         dispatch_now(new UpdateCoupon($coupon));
 
-        return back()->with('success_message', 'Coupon has been applied!');
+        return back()->with('success_message', 'Mã khuyến mãi đã được áp dụng!');
     }
 
 
@@ -40,6 +40,6 @@ class CouponsController extends Controller
     {
         session()->forget('coupon');
 
-        return back()->with('success_message', 'Coupon has been removed.');
+        return back()->with('success_message', 'Mã khuyến mãi đã bị xóa');
     }
 }

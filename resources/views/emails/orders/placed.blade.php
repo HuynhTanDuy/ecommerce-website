@@ -11,14 +11,15 @@ Cảm ơn quý khách đã đặt hàng tại Ecommerce Website.
 
 **Họ tên Khách hàng:** {{ $order->billing_name }}
 
-**Tổng tiền:** ${{ round($order->billing_total / 100, 2) }}
+**Tổng tiền:** ${{ presentPrice($order->billing_total) }}
 
 **Chi tiết đơn hàng**
 
 @foreach ($order->products as $product)
 Tên: {{ $product->name }} <br>
-Giá: ${{ round($product->price / 100, 2)}} <br>
-Số lượng: {{ $product->pivot->quantity }} <br>
+Giá: {{ presentPrice($product->price)}} <br>
+Số lượng: {{ $product->pivot->order_quantity }} <br>
+-----------
 @endforeach
 
 Xem thêm tại website của chúng tôi
