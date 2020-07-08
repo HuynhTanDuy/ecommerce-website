@@ -74,17 +74,21 @@ class UsersController extends Controller
 
         $user = auth()->user();
         $input = $request->except('password', 'password_confirmation');
+        $user->phone_number = $request->phone_number;
+        $user->address = $request->address;
+        $user->save();
 
         if (! $request->filled('password')) {
             $user->fill($input)->save();
 
-            return back()->with('success_message', 'Profile updated successfully!');
+            return back()->with('success_message', 'Cập nhật thông tin thành công!');
         }
-
+        
         $user->password = bcrypt($request->password);
         $user->fill($input)->save();
-
-        return back()->with('success_message', 'Profile (and password) updated successfully!');
+        
+        
+        return back()->with('success_message', 'Cập nhật thông tin thành công!');
     }
 
     /**

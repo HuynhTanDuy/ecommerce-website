@@ -70,7 +70,7 @@
                             </select> --}}
                             <input type="number" name="quantity" min="1" id="quantity_{{$item->id}}" value="{{$item->quantity_cart}}"  style="width: 45px;" onchange="changeQuantity({{$item->id}})">
                         </div>
-                        <div id="price_item_{{$item->id}}">{{ presentPrice($item->price * $item->quantity_cart ) }}</div>
+                        <div id="price_item_{{$item->id}}">{{ presentPrice($item->price) }}</div>
                     </div>
                 </div> <!-- end cart-table-row -->
                 @endforeach

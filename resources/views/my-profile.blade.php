@@ -9,9 +9,9 @@
 @section('content')
 
     @component('components.breadcrumbs')
-        <a href="/">Home</a>
+        <a href="/">Trang chủ</a>
         <i class="fa fa-chevron-right breadcrumb-separator"></i>
-        <span>My Profile</span>
+        <span>Thông tin cá nhân</span>
     @endcomponent
 
     <div class="container">
@@ -36,13 +36,13 @@
         <div class="sidebar">
 
             <ul>
-              <li class="active"><a href="{{ route('users.edit') }}">My Profile</a></li>
-              <li><a href="{{ route('orders.index') }}">My Orders</a></li>
+              <li class="active"><a href="{{ route('users.edit') }}">Thông tin cá nhân</a></li>
+              <li><a href="{{ route('orders.index') }}"></a></li>
             </ul>
         </div> <!-- end sidebar -->
         <div class="my-profile">
             <div class="products-header">
-                <h1 class="stylish-heading">My Profile</h1>
+                <h1 class="stylish-heading">Thông tin cá nhân</h1>
             </div>
 
             <div>
@@ -56,6 +56,14 @@
                     <div class="form-control">
                         <div class="label">Email</div>
                         <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}" placeholder="Email" required>
+                    </div>
+                    <div class="form-control">
+                        <div class="label">Số điện thoại</div>
+                        <input id="email" type="number" name="phone_number" value="{{ $user->phone_number }}" placeholder="Số điện thoại" required>
+                    </div>
+                    <div class="form-control">
+                        <div class="label">Địa chỉ</div>
+                        <input id="email" type="text" name="address" value="{{ $user->address }}" placeholder="Địa chỉ" required>
                     </div>
                     <div class="form-control">
                         <div class="label">Mật khẩu</div>

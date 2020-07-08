@@ -75,13 +75,13 @@
 							</div>
 							<div class="form-control" >
                                 <div class="label">Hình ảnh</div>
-                                <img style ="width: 30vw; height: 40vh;" src="http://localhost:8000/img/products/{{ $product->image}}">
+                                <img style ="width: 30vw; height: 40vh;" src="/img/products/{{ $product->image}}">
 								<input required type="file" name="image" accept="image/*">
 							</div>
 							<div class="form-control">
                                 <div class="label">Danh sách ảnh chi tiết sản phẩm</div>
                                 @foreach( $images as $img)
-                                    <img style ="width: 10vw; margin-right:40px; height:20vh" src = "http://localhost:8000/img/products/{{$img}}">
+                                    <img style ="width: 10vw; margin-right:40px; height:20vh" src = "/img/products/{{$img}}">
 								@endforeach
 								<div>
 									<input required type="file" name="images[]" multiple accept="image/*">
