@@ -17,6 +17,8 @@ use TCG\Voyager\Events\BreadImagesDeleted;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StoreAccepted;
 
 class StoreController extends VoyagerBaseController
 {
@@ -131,8 +133,14 @@ class StoreController extends VoyagerBaseController
    public function acceptStore($id) {
         $store = Store::where('id', $id)->first();
         $store->status = 1;
+        try {
+            Mail::send(new StoreAccepted($store));
+        } catch(Exception $e) {
+
+        }
         $store->save();
-        return redirect()->route('voyager.store.index')->with("success_message","Duyệt cửa hàng thành công");
+        
+        return redirect()->route('voyager.store.index')->with("success_message","Duyệt cửa hàng thành công. Email xác nhận đã được gửi đến chủ cửa hàng");
     }
     public function cancelStore($id) {
         $store = Store::where('id', $id)->first();
