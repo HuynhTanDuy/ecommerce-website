@@ -17,24 +17,24 @@
                 </ul>
             </div>
             @endif
-            <h2>Forgot Password?</h2>
+            <h2>Quên mật khẩu ?</h2>
             <div class="spacer"></div>
             <form action="{{ route('password.email') }}" method="POST">
                 {{ csrf_field() }}
                 <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Email" required autofocus>
                 <div class="login-container">
-                    <button type="submit" class="auth-button">Send Password Reset Link</button>
+                    <button type="submit" class="auth-button">Gửi link reset mật khẩu</button>
                 </div>
 
 
             </form>
         </div>
         <div class="auth-right">
-            <h2>Forgotten Password Information</h2>
+            <h2>Quên mật khẩu</h2>
             <div class="spacer"></div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dicta obcaecati exercitationem ut atque inventore cum. Magni autem error ut!</p>
+            <p>Lấy lại mật khẩu bằng email đã đăng ký của tài khoản</p>
             <div class="spacer"></div>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel accusantium quasi necessitatibus rerum fugiat eos, a repudiandae tempore nisi ipsa delectus sunt natus!</p>
+            <p>Vui lòng làm theo hướng dẫn trong mail nhận được!</p>
         </div>
     </div>
 </div>

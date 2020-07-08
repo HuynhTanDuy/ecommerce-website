@@ -97,7 +97,7 @@ class StoreController extends Controller
             'slug' => 'required|string|max:255',
             'details' => 'string|min:6',
             'price' => 'required|max:255',
-            'description' => 'required|string|max:255',
+            // 'description' => 'required|string|max:255',
             'quantity' => 'required|max:255'
         ]);
         if($request->hasFile('image')) {
@@ -154,14 +154,20 @@ class StoreController extends Controller
 
     public function orderDetail($order_id) {
 		$store = Store::where('id_owner', auth()->user()->id)->first();
-		$order=DB::select('SELECT * FROM orders JOIN order_product ON orders.id = order_product.order_id 
+        $order=DB::select('SELECT * FROM orders JOIN order_product ON orders.id = order_product.order_id 
         JOIN products ON order_product.product_id = products.id
         WHERE order_product.order_id = ?', [$order_id]);
         $products = DB::select('SELECT products.*,order_product.order_quantity FROM products join order_product 
-        on order_product.product_id=products.id where order_product.order_id=?', [$order_id]);
+        on order_product.product_id=products.id where order_product.order_id=? AND products.id_store=?', [$order_id,$store->id]);
+
+        $total=0;
+        foreach ($products as $item) {
+            $total+= ($item->price * $item->order_quantity);
+        }
         return view('Store.order-detail')->with([
             'order'=> $order[0],
-            'products' => $products
+            'products' => $products,
+            'total' => $total
         ]);
 
     }
@@ -177,9 +183,9 @@ class StoreController extends Controller
 
     public function orderFinished() {
 		$store = Store::where('id_owner', auth()->user()->id)->first();
-		$order=DB::select('SELECT * FROM orders JOIN order_product ON orders.id = order_product.order_id 
+		$order=DB::select('SELECT DISTINCT orders.* FROM orders JOIN order_product ON orders.id = order_product.order_id 
         JOIN products ON order_product.product_id = products.id WHERE products.id_store = ? AND orders.shipped = ?', [$store->id, 1]);
-		return view('Store.order-finished')->with([
+        return view('Store.order-finished')->with([
 			'order' => $order
 		]);
     }

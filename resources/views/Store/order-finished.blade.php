@@ -41,7 +41,7 @@
 				<table class="table">
 					<thead class="thead-dark">
 					  <tr >
-						<th scope="col" >Mã SP</th>
+						<th scope="col" >Mã đơn hàng</th>
 						<th scope="col">Người đặt</th>
 						<th scope="col">Địa chỉ</th>
 						<th scope="col">Email</th>
@@ -52,14 +52,14 @@
 					<tbody>
                     @foreach($order as $od)  
                     <tr style="text-align: center;">
-						<td>{{ $od->product_id}}</td>
+						<td>{{ $od->id}}</td>
                         <td>{{ $od->billing_name}}</td>
                         <td>{{ $od->billing_address}}</td>
                         <td>{{ $od->billing_email}}</td>
                         <td>{{ $od->billing_phone}}</td>
                         <td>
 							<a id="register" type="submit" class="detail-shop-button" 
-						href = "{{ route('order.detail', $od->order_id) }}">Chi tiết</a>
+						href = "{{ route('order.detail', $od->id) }}">Chi tiết</a>
                         </td>
                     </tr>
                     @endforeach

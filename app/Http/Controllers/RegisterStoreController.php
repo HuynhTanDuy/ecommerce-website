@@ -31,9 +31,9 @@ class RegisterStoreController extends Controller
             'name' => $request->name_store,
             'status' => 0
         ]);
-        $user = User::where('id', auth()->user()->id)->first();
-        $user->role_id = 4;
-        $user->save();
+        // $user = User::where('id', auth()->user()->id)->first();
+        // $user->role_id = 4;
+        // $user->save();
 
         return redirect()->route('store.register-info')
         ->with('success_message', 'Đăng kí mở cửa hàng thành công, vui lòng xem lại thông tin đã đăng kí và chờ xét duyệt!');
